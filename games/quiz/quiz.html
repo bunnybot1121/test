@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Couple Quiz - Place for Us</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .quiz-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quiz-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+      background-size: 300% 100%;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    h1 {
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 10px;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-weight: 300;
+    }
+
+    .question-counter {
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      font-weight: 600;
+      margin-bottom: 25px;
+      display: inline-block;
+    }
+
+    #quiz-box {
+      background: linear-gradient(135deg, #f8f9ff 0%, #e8efff 100%);
+      border-radius: 20px;
+      padding: 35px 25px;
+      margin-bottom: 30px;
+      font-size: 1.2em;
+      font-weight: 400;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.1);
+      border: 2px solid rgba(102, 126, 234, 0.1);
+      transition: all 0.3s ease;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    #quiz-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(102, 126, 234, 0.15);
+    }
+
+    .button-container {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 25px;
+    }
+
+    button {
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 15px;
+      padding: 15px 30px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    button:hover::before {
+      left: 100%;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    button:active {
+      transform: translateY(-1px);
+    }
+
+    .back-link {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      padding: 10px 15px;
+      border-radius: 10px;
+    }
+
+    .back-link:hover {
+      background: rgba(102, 126, 234, 0.1);
+      transform: translateX(-3px);
+    }
+
+    .chat-section {
+      margin-top: 30px;
+      border-top: 2px solid rgba(102, 126, 234, 0.1);
+      padding-top: 25px;
+    }
+
+    .chat-title {
+      font-size: 1.2em;
+      font-weight: 600;
+      color: #667eea;
+      margin-bottom: 15px;
+    }
+
+    .chat-box {
+      background: #f8f9ff;
+      border-radius: 15px;
+      height: 200px;
+      overflow-y: auto;
+      padding: 15px;
+      margin-bottom: 15px;
+      border: 2px solid rgba(102, 126, 234, 0.1);
+      scroll-behavior: smooth;
+    }
+
+    .message {
+      margin-bottom: 12px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      max-width: 80%;
+      word-wrap: break-word;
+      animation: messageSlideIn 0.3s ease;
+    }
+
+    @keyframes messageSlideIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .message.bunny {
+      background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+      color: white;
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .message.pichu {
+      background: linear-gradient(135deg, #4ecdc4, #6fd8d2);
+      color: white;
+      margin-right: auto;
+      text-align: left;
+    }
+
+    .message-name {
+      font-size: 0.8em;
+      font-weight: 600;
+      margin-bottom: 3px;
+      opacity: 0.9;
+    }
+
+    .message-text {
+      font-size: 0.9em;
+      line-height: 1.4;
+    }
+
+    .chat-input-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .name-selector {
+      background: white;
+      border: 2px solid rgba(102, 126, 234, 0.2);
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 0.9em;
+      min-width: 80px;
+      color: #667eea;
+      font-weight: 500;
+    }
+
+    .chat-input {
+      flex: 1;
+      background: white;
+      border: 2px solid rgba(102, 126, 234, 0.2);
+      border-radius: 10px;
+      padding: 10px 15px;
+      font-size: 0.9em;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .chat-input:focus {
+      border-color: #667eea;
+    }
+
+    .send-btn {
+      background: linear-gradient(45deg, #4ecdc4, #44a08d);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 0.9em;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .send-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
+    }
+
+    .hearts {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      top: 0;
+      left: 0;
+    }
+
+    .heart {
+      position: absolute;
+      color: rgba(255, 107, 107, 0.3);
+      font-size: 20px;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-10px) rotate(5deg); }
+      66% { transform: translateY(5px) rotate(-3deg); }
+    }
+
+    @media (max-width: 600px) {
+      .quiz-container {
+        padding: 30px 20px;
+        margin: 10px;
+      }
+      
+      h1 {
+        font-size: 2em;
+      }
+      
+      #quiz-box {
+        font-size: 1.1em;
+        padding: 25px 20px;
+      }
+      
+      .button-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      button {
+        width: 100%;
+        max-width: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <div class="hearts">
+      <div class="heart" style="left: 10%; animation-delay: 0s;">💝</div>
+      <div class="heart" style="left: 20%; animation-delay: 1s;">💕</div>
+      <div class="heart" style="left: 80%; animation-delay: 2s;">💖</div>
+      <div class="heart" style="left: 90%; animation-delay: 3s;">💗</div>
+    </div>
+    
+    <h1>💑 Couple Quiz</h1>
+    <p class="subtitle">Discover more about each other</p>
+    
+    <div class="question-counter">
+      Question <span id="current-q">1</span> of <span id="total-q">7</span>
+    </div>
+    
+    <div id="quiz-box"></div>
+    
+    <div class="button-container">
+      <button onclick="nextQuestion()">Next Question ➡️</button>
+    </div>
+
+    <div class="chat-section">
+      <div class="chat-title">💬 Chat About This Question</div>
+      <div class="chat-box" id="chatBox"></div>
+      <div class="chat-input-container">
+        <select class="name-selector" id="nameSelector">
+          <option value="bunny">🐰 Bunny</option>
+          <option value="pichu">⚡ Pichu</option>
+        </select>
+        <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." maxlength="200">
+        <button class="send-btn" onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+    
+    <a href="../../main.html" class="back-link">⬅️ Back to Home</a>
+  </div>
+
+  <script>
+    const questions = [
+      "Who said 'I love you' first?",
+      "Bunny, what's Pichu's favorite color?",
+      "Pichu, what's Bunny's go-to comfort food?",
+      "Your cutest memory together?",
+      "What's each other's hidden talent?",
+      "Who is more likely to say sorry after a fight?",
+      "What's a place you both want to visit?"
+    ];
+    
+    let idx = 0;
+    let messages = [];
+
+    function nextQuestion() {
+      idx = (idx + 1) % questions.length;
+      showQuestion();
+      updateCounter();
+      
+      // Add a little animation effect
+      const quizBox = document.getElementById('quiz-box');
+      quizBox.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        quizBox.style.transform = 'scale(1)';
+      }, 100);
+    }
+
+    function showQuestion() {
+      document.getElementById('quiz-box').textContent = questions[idx];
+    }
+
+    function updateCounter() {
+      document.getElementById('current-q').textContent = idx + 1;
+      document.getElementById('total-q').textContent = questions.length;
+    }
+
+    function sendMessage() {
+      const chatInput = document.getElementById('chatInput');
+      const nameSelector = document.getElementById('nameSelector');
+      const message = chatInput.value.trim();
+      
+      if (message === '') return;
+      
+      const messageObj = {
+        name: nameSelector.value,
+        text: message,
+        timestamp: new Date()
+      };
+      
+      messages.push(messageObj);
+      displayMessage(messageObj);
+      chatInput.value = '';
+      
+      // Scroll to bottom
+      const chatBox = document.getElementById('chatBox');
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function displayMessage(messageObj) {
+      const chatBox = document.getElementById('chatBox');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${messageObj.name}`;
+      
+      const nameEmoji = messageObj.name === 'bunny' ? '🐰' : '⚡';
+      const displayName = messageObj.name === 'bunny' ? 'Bunny' : 'Pichu';
+      
+      messageDiv.innerHTML = `
+        <div class="message-name">${nameEmoji} ${displayName}</div>
+        <div class="message-text">${messageObj.text}</div>
+      `;
+      
+      chatBox.appendChild(messageDiv);
+    }
+
+    // Allow Enter key to send message
+    document.getElementById('chatInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+
+    // Initialize
+    showQuestion();
+    updateCounter();
+  </script>
+</body>
+</html>

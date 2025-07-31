@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Place for Us - Our Digital Love Haven</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Pacifico&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --text-primary: #2d3748;
+      --text-secondary: #4a5568;
+      --accent-pink: #f093fb;
+      --accent-blue: #4facfe;
+      --accent-purple: #764ba2;
+    }
+
+    body {
+      font-family: 'Inter', 'Quicksand', sans-serif;
+      background: var(--primary-gradient);
+      background-size: 400% 400%;
+      animation: gradientFlow 15s ease infinite;
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    @keyframes gradientFlow {
+      0%, 100% { background-position: 0% 50%; }
+      25% { background-position: 100% 50%; }
+      50% { background-position: 100% 100%; }
+      75% { background-position: 0% 100%; }
+    }
+
+    /* Enhanced particle system */
+    .particle-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .floating-particle {
+      position: absolute;
+      font-size: 1.5rem;
+      opacity: 0;
+      animation: particleFloat 20s infinite linear;
+      filter: blur(0.5px);
+    }
+
+    .floating-particle:nth-child(1) { left: 10%; animation-delay: 0s; color: rgba(240, 147, 251, 0.6); }
+    .floating-particle:nth-child(2) { left: 20%; animation-delay: 3s; color: rgba(79, 172, 254, 0.6); }
+    .floating-particle:nth-child(3) { left: 30%; animation-delay: 6s; color: rgba(245, 87, 108, 0.6); }
+    .floating-particle:nth-child(4) { left: 40%; animation-delay: 9s; color: rgba(118, 75, 162, 0.6); }
+    .floating-particle:nth-child(5) { left: 50%; animation-delay: 12s; color: rgba(102, 126, 234, 0.6); }
+    .floating-particle:nth-child(6) { left: 60%; animation-delay: 15s; color: rgba(240, 147, 251, 0.6); }
+    .floating-particle:nth-child(7) { left: 70%; animation-delay: 18s; color: rgba(79, 172, 254, 0.6); }
+    .floating-particle:nth-child(8) { left: 80%; animation-delay: 1s; color: rgba(245, 87, 108, 0.6); }
+
+    @keyframes particleFloat {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Glowing orbs */
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(1px);
+      animation: orbGlow 12s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    .orb-1 {
+      width: 150px;
+      height: 150px;
+      top: 15%;
+      left: 10%;
+      background: radial-gradient(circle, rgba(240, 147, 251, 0.3) 0%, transparent 70%);
+      animation-delay: 0s;
+    }
+
+    .orb-2 {
+      width: 200px;
+      height: 200px;
+      top: 60%;
+      right: 15%;
+      background: radial-gradient(circle, rgba(79, 172, 254, 0.3) 0%, transparent 70%);
+      animation-delay: 4s;
+    }
+
+    .orb-3 {
+      width: 120px;
+      height: 120px;
+      bottom: 20%;
+      left: 30%;
+      background: radial-gradient(circle, rgba(245, 87, 108, 0.3) 0%, transparent 70%);
+      animation-delay: 8s;
+    }
+
+    @keyframes orbGlow {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+      25% { transform: translate(20px, -20px) scale(1.1); opacity: 0.8; }
+      50% { transform: translate(-15px, 15px) scale(0.9); opacity: 0.4; }
+      75% { transform: translate(25px, 5px) scale(1.05); opacity: 0.7; }
+    }
+
+    /* Header */
+    .app-header {
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+      position: relative;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .main-logo {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 8px 32px rgba(240, 147, 251, 0.4));
+      animation: logoFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(5deg); }
+    }
+
+    .app-title {
+      font-family: 'Pacifico', cursive;
+      font-size: 2.5rem;
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #ffffff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+      animation: titleGlow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      0% { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3)); }
+      100% { filter: drop-shadow(0 0 40px rgba(255, 255, 255, 0.6)); }
+    }
+
+    .avatar-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .avatar-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      animation: avatarGlow 2s ease-in-out infinite alternate;
+    }
+
+    .avatar-img:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes avatarGlow {
+      0% { box-shadow: 0 8px 32px rgba(240, 147, 251, 0.3); }
+      100% { box-shadow: 0 8px 32px rgba(79, 172, 254, 0.3); }
+    }
+
+    .love-connector {
+      font-size: 2rem;
+      animation: heartbeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    .welcome-bubble {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 1rem 2rem;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+      animation: bubbleFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes bubbleFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+    }
+
+    /* Main content */
+    .main-content {
+      position: relative;
+      z-index: 10;
+      padding: 0 1rem;
+    }
+
+    .welcome-card {
+      max-width: 500px;
+      margin: 2rem auto;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 16px 64px rgba(0, 0, 0, 0.1);
+      animation: cardSlideUp 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes cardSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .greeting-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .love-message {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      min-height: 30px;
+    }
+
+    .stats-section {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .daily-quote {
+      background: rgba(79, 172, 254, 0.2);
+      border-radius: 16px;
+      padding: 1rem;
+      color: white;
+      font-style: italic;
+      border: 1px solid rgba(79, 172, 254, 0.3);
+    }
+
+    /* Games grid */
+    .games-section {
+      max-width: 800px;
+      margin: 3rem auto;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 32px;
+      padding: 2rem;
+      box-shadow: 0 16px 64px rgba(0, 0, 0, 0.1);
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .game-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 1.5rem;
+      text-align: center;
+      text-decoration: none;
+      color: white;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .game-card:hover::before {
+      left: 100%;
+    }
+
+    .game-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .game-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+      animation: iconFloat 2s ease-in-out infinite;
+    }
+
+    @keyframes iconFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-3px); }
+    }
+
+    .game-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    /* Mini cards */
+    .mini-section {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .mini-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 0.8rem 1.5rem;
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mini-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Modal sections */
+    .modal-section {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-section.visible {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+      animation: modalFadeIn 0.3s ease;
+    }
+
+    @keyframes modalFadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .modal-content {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      color: white;
+      position: relative;
+      animation: modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
+    }
+
+    .modal-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    /* Love jar specific styles */
+    .jar-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 1.5rem 0;
+    }
+
+    .jar-visual {
+      position: relative;
+      width: 100px;
+      min-height: 80px;
+      margin-bottom: 1rem;
+    }
+
+    .jar-note {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      padding: 0.5rem 0.8rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      animation: noteFloat 1.5s ease-out forwards;
+      max-width: 120px;
+      word-wrap: break-word;
+    }
+
+    @keyframes noteFloat {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .jar-bottom {
+      width: 100px;
+      height: 20px;
+      background: linear-gradient(135deg, rgba(240, 147, 251, 0.3), rgba(79, 172, 254, 0.3));
+      border-radius: 0 0 20px 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .jar-controls {
+      display: flex;
+      gap: 0.8rem;
+      margin: 1rem 0;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .jar-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.8rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    .jar-input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .action-btn {
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue));
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .jar-result {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      text-align: center;
+      min-height: 40px;
+    }
+
+    /* Notes section */
+    .notes-input {
+      width: 100%;
+      min-height: 120px;
+      padding: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      outline: none;
+      resize: vertical;
+      font-family: inherit;
+      margin-bottom: 1rem;
+    }
+
+    .notes-input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .notes-list {
+      list-style: none;
+      padding: 0;
+      margin-top: 1.5rem;
+    }
+
+    .note-item {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .note-date {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Goals section */
+    .goals-form {
+      display: flex;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+      align-items: center;
+    }
+
+    .goal-input {
+      flex: 1;
+      padding: 0.8rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      outline: none;
+    }
+
+    .goals-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .goal-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      margin-bottom: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .goal-checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      border-radius: 4px;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .goal-checkbox.completed {
+      background: var(--accent-pink);
+      border-color: var(--accent-pink);
+    }
+
+    .goal-text {
+      flex: 1;
+    }
+
+    .goal-text.completed {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+
+    /* Footer */
+    .app-footer {
+      text-align: center;
+      padding: 2rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 500;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .app-title {
+        font-size: 2rem;
+      }
+
+      .games-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 1rem;
+      }
+
+      .game-card {
+        padding: 1rem;
+      }
+
+      .modal-content {
+        padding: 1.5rem;
+        margin: 1rem;
+      }
+
+      .jar-controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .jar-input {
+        min-width: auto;
+      }
+
+      .goals-form {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    /* Floating heart animation */
+    .floating-heart {
+      position: fixed;
+      font-size: 2rem;
+      pointer-events: none;
+      z-index: 10000;
+      animation: heartFly 2s ease-out forwards;
+    }
+
+    @keyframes heartFly {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-100px) scale(1.5);
+      }
+    }
+
+    /* Loading animation */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Particle system -->
+  <div class="particle-container">
+    <div class="floating-particle">💖</div>
+    <div class="floating-particle">💙</div>
+    <div class="floating-particle">💜</div>
+    <div class="floating-particle">✨</div>
+    <div class="floating-particle">💛</div>
+    <div class="floating-particle">💚</div>
+    <div class="floating-particle">🌟</div>
+    <div class="floating-particle">💕</div>
+  </div>
+
+  <!-- Glowing orbs -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <img src="assets/cute-heart.gif" alt="Heart" class="main-logo"/>
+    <h1 class="app-title">🌸 Place for Us 🌸</h1>
+    <div class="avatar-section">
+      <img src="assets/bunny.png" class="avatar-img" alt="Bunny" />
+      <span class="love-connector">💙✨</span>
+      <img src="assets/pichu.png" class="avatar-img" alt="Pichu" />
+    </div>
+    <div class="welcome-bubble">
+      👋 Hi, Bunny & Pichu! Welcome to your magical world!
+    </div>
+  </header>
+  
+  <!-- Main content -->
+  <main class="main-content">
+    <!-- Welcome card -->
+    <section class="welcome-card">
+      <h2 class="greeting-title" id="greeting"></h2>
+      <div class="love-message" id="love-msg"></div>
+      <div class="stats-section" id="anniversary"></div>
+      <div class="daily-quote" id="today-quote"></div>
+    </section>
+
+    <!-- Games section -->
+    <section class="games-section">
+      <div class="games-grid">
+        <a href="games/truth.html/truthordare.html" class="game-card">
+          <span class="game-icon">🧃</span>
+          <span class="game-title">Truth & Dare</span>
+        </a>
+        <a href="games/xox/xox.html" class="game-card">
+          <span class="game-icon">❌⭕️</span>
+          <span class="game-title">Tic-Tac-Toe</span>
+        </a>
+        <a href="games/wouldyourather/ourather.html" class="game-card">
+          <span class="game-icon">💕</span>
+          <span class="game-title">Would You Rather</span>
+        </a>
+        <a href="games/quiz/quiz.html" class="game-card">
+          <span class="game-icon">✏️</span>
+          <span class="game-title">Couple Quiz</span>
+        </a>
+        <a href="#" class="game-card" onclick="event.preventDefault(); showModal('lovejar')">
+          <span class="game-icon">🍯</span>
+          <span class="game-title">Love Jar</span>
+        </a>
+        <a href="#" class="game-card" onclick="event.preventDefault(); showModal('notes')">
+          <span class="game-icon">💌</span>
+          <span class="game-title">Love Notes</span>
+        </a>
+      </div>
+
+      <div class="mini-section">
+        <a href="#" class="mini-card" onclick="event.preventDefault(); showModal('playlist')">🎶 Our Playlist</a>
+        <a href="#" class="mini-card" onclick="event.preventDefault(); showModal('goals')">🎯 Couple Goals</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Love Jar Modal -->
+  <div id="lovejar" class="modal-section">
+  <div class="modal-content">
+    <button class="close-btn" onclick="hideModal('lovejar')">&times;</button>
+    <h2 class="modal-title">🍯 The Love Jar</h2>
+    <div class="jar-container">
+      <input id="jarInput" class="jar-input" placeholder="Write your love note..." />
+      <button id="jarBtn" class="action-btn">Add Note</button>
+      <div id="jarResult" class="jar-result"></div>
+    </div>
+  </div>
+</div>
+<div id="playlist" class="modal-section">
+  <div class="modal-content">
+    <button class="close-btn" onclick="hideModal('playlist')">&times;</button>
+    <h2 class="modal-title">🎶 Our Playlist</h2>
+    <div class="playlist-container">
+<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/56Iis0WFBKkl5V3hkBrlR5?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <div id="playlistResult" class="jar-result">Enjoy our Spotify playlist above!</div>
+    </div>
+  </div>
+</div>
+<div id="notes" class="modal-section">
+  <div class="modal-content">
+    <button class="close-btn" onclick="hideModal('notes')">&times;</button>
+    <h2 class="modal-title">💌 Love Notes</h2>
+    <div class="notes-container">
+      <textarea id="notesInput" class="notes-input" placeholder="Write your love notes here..."></textarea>
+      <button id="notesBtn" class="action-btn">Add Note</button>
+      <ul id="notesList" class="notes-list"></ul>
+    </div>
+  </div>
+</div>
+<div id="goals" class="modal-section">
+  <div class="modal-content">
+    <button class="close-btn" onclick="hideModal('goals')">&times;</button>
+    <h2 class="modal-title">🎯 Couple Goals</h2>
+    <div class="goals-container">
+      <form id="goalsForm" class="goals-form">
+        <input type="text" id="goalInput" class="goal-input" placeholder="Add a new goal..." />
+        <button type="submit" class="action-btn">Add Goal</button>
+      </form>
+      <ul id="goalsList" class="goals-list"></ul>
+    </div>
+  </div>
+</div>
+<script src="index.js"></script>

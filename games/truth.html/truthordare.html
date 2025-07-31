@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Truth & Dare — Bunny & Pichu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="truthordare.css" />
+</head>
+<body>
+  <header>
+    <img src="../../assets/bunny.png" class="mini-avatar" alt="Bunny" />
+    <span class="vs">vs</span>
+    <img src="../../assets/pichu.png" class="mini-avatar" alt="Pichu" />
+    <h1>Truth or Dare</h1>
+    <div class="subtitle">Sweet Surprises for Two Hearts 💞</div>
+  </header>
+  <main>
+    <div class="bottle-area glass">
+      <div id="bottle-spinner">
+        <img src="../../assets/bottle-removebg-preview.png" id="bottle-img" alt="Spin the Bottle" />
+        <div class="bottle-glow"></div>
+      </div>
+      <button class="spin-btn shine" onclick="spinBottle()">🧃 Spin the Bottle!</button>
+      <div id="bottle-result"></div>
+    </div>
+    <div id="question-box" class="cute-box glass"></div>
+    <div class="td-buttons">
+      <button class="truth-btn rainbow-btn" onclick="pick('truth')"><span>🌷</span> Truth</button>
+      <button class="dare-btn rainbow-btn" onclick="pick('dare')"><span>⚡</span> Dare</button>
+    </div>
+    <button class="random-btn rainbow-btn2" onclick="randomPick()">💖 Random</button>
+    <div class="sparkle"></div>
+
+    <!-- Cute Chat Box -->
+    <section class="chat-wrap glass" id="chat-section">
+      <h2>💬 Bunny & Pichu Chat</h2>
+      <div class="chat-box" id="chat-box"></div>
+      <div class="chat-input-area">
+        <select id="chat-name">
+          <option value="bunny">🐰 Bunny</option>
+          <option value="pichu">⚡ Pichu</option>
+        </select>
+        <input type="text" id="chat-input" placeholder="Type your sweetest message..." maxlength="150" />
+        <button onclick="sendChat()" class="send-btn rainbow-btn2">➤</button>
+      </div>
+      <div id="chat-sugg" class="chat-suggestion"></div>
+    </section>
+
+    <!-- Cute Side Tip / Date Idea -->
+    <div class="side-tip glass" id="side-tip">
+      <span class="close-tip" onclick="document.getElementById('side-tip').style.display='none'">&times;</span>
+      <strong>🌸 Date Idea:</strong><br>
+      <span id="date-idea"></span>
+    </div>
+
+    <a href="../../main.html" class="back">⬅️ Back</a>
+  </main>
+  <script src="truthordare.js"></script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Would You Rather — Bunny & Pichu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      background: linear-gradient(118deg, #bae6ff 50%, #fccee4 120%);
+      font-family: 'Quicksand', cursive, sans-serif;
+      color: #b94e93;
+      margin:0; min-height:100vh; padding:0;
+    }
+    header {text-align:center;background:rgba(252,206,228,0.22);padding:1.5em 0 1em;}
+    .avatars {display:flex;justify-content:center;gap:1em;}
+    .mini-avatar {width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid #bae6ff;box-shadow:0 2px 10px #bae6ff7a;background:#ffeafc;}
+    h1 {font-size:2em;margin:.15em 0 .25em 0;}
+    .subtitle {color:#7d3180;font-size:1.13em;}
+    main {max-width:430px;margin:0 auto;padding:1em;}
+    .wyr-box {background:linear-gradient(100deg,#fbeaff 80%,#bae6ff 140%);border-radius:18px;box-shadow:0 0 20px #bbe9ff29;padding:1.5em 1.1em;min-height:120px;text-align:center;position:relative;}
+    .choice-btn {padding:.68em 1.15em;margin:1em .6em 0 0;background:#fc99bb;color:#fff;font-size:1.09em;border:none;border-radius:16px;cursor:pointer;box-shadow:0 2px 10px #fcbee57a;transition:transform .14s,background .14s;}
+    .choice-btn:last-child{margin-right:0;}
+    .choice-btn:hover,.option-picked{background:linear-gradient(99deg,#bae6ff 80%,#fc99bb 122%);color:#ba3a69;transform:scale(1.06);}
+    .score-row{margin:.9em 0;color:#6c1e63;}
+    .controls{margin:1em 0;}
+    .new-btn{padding:.4em 1em;border-radius:12px;background:#bbe9ff;color:#c74f80;font-weight:700;border:none;cursor:pointer;margin-left:.42em;}
+    .add-row{display:flex;gap:.5em;margin:.8em 0;}
+    .add-in{flex:1;padding:.44em .7em;border-radius:9px;border:1.2px solid #fc99bb;}
+    .add-go{background:#b94e93;color:#fff;border:none;padding:.42em 1em;border-radius:9px;cursor:pointer;}
+    .add-go:hover{background:#fc99bb;}
+    .wyr-log{font-size:1.07em;margin:.7em 0 0 .6em;color:#2079a7;}
+    .chat-wrap{margin-top:1.75em;background:linear-gradient(120deg,#fbeaff 80%,#fcbee5 130%);box-shadow:0 0 20px #bae6ff29;padding:1em;border-radius:18px;}
+    .chat-head{font-size:1.15em;margin:0 0 .6em 0;}
+    .chat-box{border-radius:13px;background:#fbeaffb6;box-shadow:0 0 10px #fcbee527;max-height:130px;overflow:auto;padding:.6em .9em .58em;min-height:48px;font-size:1em;}
+    .chat-msg{margin-bottom:.32em;}
+    .chat-bunny{color:#fc99bb;}
+    .chat-pichu{color:#298aba;}
+    .chat-input-area{display:flex;gap:.3em;margin-top:.8em;}
+    .chat-side{border-radius:8px;padding:.4em .6em;background:#fccee472;border:none;}
+    .chat-send{border-radius:8px;background:#bae6ff;padding:.41em 1.1em;border:none;color:#ac2972;font-weight:600;cursor:pointer;}
+    .chat-send:hover{background:#fcbee5;}
+    .back{display:inline-block;margin-top:1.1em;color:#b94e93;background:linear-gradient(96deg,#bae6ff 65%,#fc99bb 130%);padding:.36em 1.15em;border-radius:11px;text-decoration:none;font-weight:600;}
+    /* Confetti Effect */
+    .confetti-emoji{position:fixed;user-select:none;pointer-events:none;z-index:99;transition:all 1.2s;}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="avatars">
+      <img src="../assets/bunny.jpg" class="mini-avatar" alt="Bunny" />
+      <img src="../assets/pichu.jpg" class="mini-avatar" alt="Pichu" />
+    </div>
+    <h1>Would You Rather?</h1>
+    <div class="subtitle">Insane, Sweet, and Impossible Choices for Us!</div>
+  </header>
+  <main>
+    <div class="wyr-box" id="wyr-box">
+      <!-- Question and options will show here -->
+    </div>
+    <div class="score-row" id="score-row"></div>
+    <div class="controls">
+      <button onclick="nextWYR()" class="new-btn">➔ Next</button>
+      <button onclick="randomWYR()" class="new-btn">🎲 Random</button>
+      <button onclick="wildBtn()" class="new-btn">🤪 Wildcard</button>
+      <button onclick="resetWYR()" class="new-btn">🔃 Reset</button>
+    </div>
+    <!-- Add your own question -->
+    <form id="addForm" class="add-row"
+      onsubmit="addCustomWYR(event)">
+      <input placeholder="Your wildest Would You Rather..." id="addQ" class="add-in" maxlength="130" required />
+      <input placeholder="Option 1" id="addA" class="add-in" maxlength="40" required />
+      <input placeholder="Option 2" id="addB" class="add-in" maxlength="40" required />
+      <button type="submit" class="add-go">+ Add</button>
+    </form>
+    <div id="wyr-log" class="wyr-log"></div>
+    <!-- Chat Box Section -->
+    <section class="chat-wrap">
+      <div class="chat-head">💬 Bunny & Pichu Chat</div>
+      <div class="chat-box" id="chatBox"></div>
+      <div class="chat-input-area">
+        <select id="chatUser" class="chat-side">
+          <option value="bunny">🐰 Bunny</option>
+          <option value="pichu">⚡ Pichu</option>
+        </select>
+        <input id="chatInput" type="text" maxlength="120" placeholder="Type your reaction or dare..." class="chat-side" />
+        <button class="chat-send" onclick="sendChat()">Send</button>
+      </div>
+    </section>
+    <a href="../../main.html" class="back">⬅️ Back</a>
+  </main>
+  <audio id="popfx" src="https://cdn.pixabay.com/audio/2022/11/16/audio_12fa3d369e.mp3" preload="auto"></audio>
+  <script>
+    // Would You Rather questions
+    let wyrList = [
+      {q:"Would you rather always talk in rhymes or only be able to whisper?",a:"Rhymes Only",b:"Whisper Only"},
+      {q:"Would you rather have to sing every sentence or dance everywhere you go?",a:"Sing Everything",b:"Dance Everywhere"},
+      {q:"Would you rather be a unicorn for a day or a shooting star for a night?",a:"Unicorn for a day",b:"Shooting star for a night"},
+      {q:"Would you rather be stuck in a romantic comedy or an alien adventure with me?",a:"Romantic Comedy",b:"Alien Adventure"},
+      {q:"Would you rather tickle a grumpy cat or boop a sleepy dog’s nose—blindfolded?",a:"Tickle grumpy cat",b:"Boop sleepy dog"},
+      {q:"Would you rather swap bodies with your partner for a day or swap phones for a day?",a:"Swap bodies!",b:"Swap phones 😮"},
+      {q:"Would you rather spend a day together on Mars or go scuba diving at midnight?",a:"Mars Date",b:"Scuba at Midnight"},
+      {q:"Would you rather eat chocolate on pizza or ketchup on ice cream for a month?",a:"Choco Pizza",b:"Ketchup Ice Cream"},
+      {q:"Would you rather our thoughts be broadcast as subtitles or have to say everything on live radio?",a:"Subtitles",b:"Live Radio!"},
+      {q:"Would you rather never stop hiccuping on dates or literally float every time you blush?",a:"Hiccup forever 😳",b:"Float when blushing"},
+      {q:"Would you rather your laugh sound like a duck or hiccup after every kiss?",a:"Duck Laugh",b:"Hiccup after kiss"},
+      {q:"Would you rather hold hands, superglued for 1 day or wear matching onesies for 1 week?",a:"Superglued hands",b:"Matching onesies"},
+      {q:"Would you rather have every photo be photobombed by a squirrel or sunglass emoji?",a:"Squirrel photobomb",b:"😎 Sunglass emoji"},
+      {q:"Would you rather only use memes to text for a week or only use voice notes?",a:"Only memes",b:"Only voice notes"},
+      {q:"Would you rather swap your favorite food forever or swap your favorite movie forever?",a:"Swap food",b:"Swap movie"},
+      {q:"Would you rather be BFFs with a ghost or a time-traveling sheep?",a:"Ghost BFF",b:"Time-travel sheep"},
+      {q:"Would you rather every date be a surprise OR plan every date for the year in January?",a:"Surprise always!",b:"Plan all at Jan"},
+      {q:"Would you rather go on a hot-air balloon ride or underwater submarine picnic?",a:"Hot-air balloon",b:"Submarine picnic"},
+      {q:"Would you rather be chased by 100 kittens or one giant turtle?",a:"100 kittens 😱",b:"Giant turtle"},
+      {q:"Would you rather teleport, but only to weird places, or freeze time, but only for 5 seconds?",a:"Teleport weird",b:"Freeze 5s"},
+      {q:"Would you rather alien world me ek din bitana pade, jahan sab creatures aapki baatein sunte hain par reply nahi karte OR zombie apocalypse me ek zombie ke saath dance karna pade, bina kisi gear ke?",a:"Alien world me ek din bitana",b:"Zombie ke saath dance karna"},
+      {q:"Would you rather har baar jab aap bologe to 3 seconds ke liye aap unicorn ban jaoge OR ek din ke liye har jagah hawa ke jhonke aapke saath cricketer ki tarah cricket khelne lagen?",a:"3 second unicorn banna",b:"Hawa me cricket khelna"},
+      {q:"Would you rather have a song play every time we hold hands, or fireworks every time we hug?",a:"Song with hands",b:"Fireworks hug"},
+      {q:"Would you rather teleport to Paris or Tokyo for our next random date?",a:"Paris Baby!",b:"Tokyo Adventure"},
+      {q:"Would you rather wear mismatched socks for a year or mismatched shoes for a week?",a:"Socks mismatched",b:"Shoes mismatched"},
+      {q:"Would you rather only communicate by singing for a day or only by miming?",a:"Singing only",b:"Miming only"},
+      {q:"Would you rather have penguin butler follow us everywhere or squirrel paparazzi?",a:"Penguin butler!",b:"Squirrel paparazzi"},
+      {q:"Would you rather do a TikTok dance together in public or karaoke our song in a crowded place?",a:"TikTok dance",b:"Karaoke session!"},
+      {q:"Would you rather have dessert for every meal or breakfast for dinner forever?",a:"Dessert always",b:"Breakfast for dinner"},
+      {q:"Would you rather be able to talk to plants or animals (only when together)?",a:"Plants",b:"Animals"},
+      {q:"Would you rather have a magical flying scooter for two, or a magical rainbow slide at home?",a:"Flying scooter",b:"Rainbow slide"},
+    ];
+    let curIdx = 0, scores = {a:0,b:0}, logArr = [];
+    const box = document.getElementById('wyr-box');
+    const scoreRow = document.getElementById('score-row');
+    const wyrLog = document.getElementById('wyr-log');
+    function showWYR(idx) {
+      const it = wyrList[idx];
+      if (!it) return;
+      box.innerHTML = `
+        <div style="font-size:1.18em;"><b>${it.q}</b></div>
+        <button class="choice-btn" onclick="pickWYR('a')">${it.a}</button>
+        <button class="choice-btn" onclick="pickWYR('b')">${it.b}</button>
+      `;
+      scoreRow.innerHTML = `<b>Q:</b> ${idx+1}/${wyrList.length} — <b>Choices</b> <span style="color:#fc99bb;">${scores.a}</span> : <span style="color:#298aba;">${scores.b}</span>`;
+    }
+    function pickWYR(ans) {
+      confettiEffect();
+      document.getElementById('popfx').currentTime = 0;
+      document.getElementById('popfx').play();
+      scores[ans]++;
+      logArr.push(`Q${curIdx+1}: <span style="color:${ans=='a'?'#fc99bb':'#298aba'}">${wyrList[curIdx][ans]}</span>`);
+      wyrLog.innerHTML = logArr.slice(-6).join('<br>');
+      afterPrompt();
+      nextWYR();
+      streakCheck(ans);
+    }
+    function nextWYR() {
+      curIdx = (curIdx+1)%wyrList.length;
+      showWYR(curIdx);
+    }
+    function randomWYR() {
+      curIdx = Math.floor(Math.random()*wyrList.length);
+      showWYR(curIdx);
+    }
+    function resetWYR() {
+      curIdx = 0; scores.a=0; scores.b=0; logArr=[];
+      showWYR(curIdx); wyrLog.innerHTML="";
+    }
+    function addCustomWYR(e) {
+      e.preventDefault();
+      let q = document.getElementById('addQ').value.trim();
+      let a = document.getElementById('addA').value.trim();
+      let b = document.getElementById('addB').value.trim();
+      if(!q||!a||!b) return alert("Please fill all fields!");
+      wyrList.push({q,a,b});
+      document.getElementById('addQ').value="";
+      document.getElementById('addA').value="";
+      document.getElementById('addB').value="";
+      alert("New crazy WYR added!");
+      showWYR(wyrList.length-1);
+    }
+    // WILDCARD button logic
+    const wildcards = [
+      "Selfie pose karo abhi! 📸",
+      "Apna sabse weird dance step dikhao! 💃",
+      "Partner ko ek funny line bolo (badnaam mat hona 😂)",
+      "Table ke niche 4 second ke liye chhupo!",
+      "Jo bhi jawab select hua, uska opposite abhi act karo",
+      "Random animal sound nikalo!",
+      "Apne partner ke liye compliment bolo abhi!",
+      "Agli turn, aankhe band karke answer do 🙈"
+    ];
+    function wildBtn() {
+      alert("🤪 Wildcard: " + wildcards[Math.floor(Math.random()*wildcards.length)]);
+    }
+    // Bonus after each answer
+    const afterPrompts = [
+      "Confess something sweet in chat!",
+      "React with your wildest dance!",
+      "Do a quick high-five! 🙌",
+      "Pose like a unicorn for 4s",
+      "Make a silly face for your partner 😛",
+      "Send a dare in chat!",
+      "Victory pose now! ✨",
+      "Stare contest for 4s 👀"
+    ];
+    function afterPrompt() {
+      wyrLog.innerHTML +=
+        `<div style="margin-top:.6em;padding:.3em .8em;background:#fcbee558;color:#514; border-radius:9px;">
+        ✨ Quick challenge: <b>${afterPrompts[Math.floor(Math.random()*afterPrompts.length)]}</b>
+        </div>`;
+    }
+    // Confetti
+    function confettiEffect() {
+      for(let i=0;i<14;i++) {
+        setTimeout(()=>{
+          const span = document.createElement('span');
+          span.textContent = ['😂','💖','🔥','🎉','😜','🥒','🦄','💙','⚡','🍕'][Math.floor(Math.random()*10)];
+          span.className = "confetti-emoji";
+          span.style.left=(Math.random()*95)+'vw';
+          span.style.top=(10+Math.random()*70)+'vh';
+          span.style.fontSize=(1.9+Math.random()*1.5)+'em';
+          span.style.opacity=0.94;
+          document.body.appendChild(span);
+          setTimeout(()=>{ span.style.opacity=0; span.style.transform='translateY(-90px) rotate(-20deg)'; },35);
+          setTimeout(()=>{ span.remove(); },1200+Math.random()*140);
+        }, i*40+Math.random()*70);
+      }
+    }
+    // Streak check (optional fun)
+    let answerStreak = [];
+    function streakCheck(ans) {
+      answerStreak.push(ans);
+      if(answerStreak.length > 3) answerStreak.shift();
+      if(answerStreak.join('')==="aaa") {
+        alert("You LOVE Option 1! 😻");
+      } else if(answerStreak.join('')==="bbb") {
+        alert("You LOVE Option 2! 😱");
+      }
+    }
+    // Chat box
+    let chatMsgs = [];
+    function sendChat() {
+      const user = document.getElementById('chatUser').value;
+      const txt = document.getElementById('chatInput').value.trim();
+      if(!txt) return;
+      chatMsgs.push({user,txt});
+      document.getElementById('chatInput').value = '';
+      displayChat();
+      if(Math.random()<0.28) showChatPrompt();
+    }
+    function displayChat() {
+      const div = document.getElementById('chatBox');
+      div.innerHTML = chatMsgs.slice(-9).map(m =>
+        `<div class="chat-msg ${m.user==='bunny'?'chat-bunny':'chat-pichu'}"><b>${m.user==='bunny'?'🐰':'⚡'}:</b> ${m.txt}</div>`
+      ).join('');
+      div.scrollTop = 9999;
+    }
+    function showChatPrompt() {
+      const prompts=[
+        "Send a sweet compliment! 💌",
+        "Dare your partner in chat!",
+        "Confess: funniest WYR you’d actually do?",
+        "Write what you’re actually thinking now!",
+        "Send a virtual hug emoji!",
+        "Describe your dream date 🤩"
+      ];
+      const box = document.getElementById('chatBox');
+      const hint = document.createElement('div');
+      hint.textContent = prompts[Math.floor(Math.random()*prompts.length)];
+      hint.style="font-size:.96em;padding:.36em 0 .12em .5em;color:#4a7be0;";
+      box.appendChild(hint);
+      setTimeout(()=>{hint.remove();},2600);
+    }
+    // Initial load
+    resetWYR();
+  </script>
+</body>
+</html>
