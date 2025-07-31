@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <link rel="manifest" href="/manifest.json">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: 'Inter', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 12s ease infinite;
+      position: relative;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      25% { background-position: 100% 50%; }
+      50% { background-position: 100% 100%; }
+      75% { background-position: 0% 100%; }
+    }
+
+    /* Enhanced particle system */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      animation: particleFloat 15s infinite linear;
+    }
+
+    .particle:nth-child(1) { width: 3px; height: 3px; background: rgba(255,255,255,0.6); left: 10%; animation-delay: 0s; }
+    .particle:nth-child(2) { width: 5px; height: 5px; background: rgba(255,255,255,0.4); left: 20%; animation-delay: 2s; }
+    .particle:nth-child(3) { width: 2px; height: 2px; background: rgba(255,255,255,0.8); left: 30%; animation-delay: 4s; }
+    .particle:nth-child(4) { width: 4px; height: 4px; background: rgba(255,255,255,0.3); left: 40%; animation-delay: 1s; }
+    .particle:nth-child(5) { width: 6px; height: 6px; background: rgba(255,255,255,0.5); left: 50%; animation-delay: 3s; }
+    .particle:nth-child(6) { width: 3px; height: 3px; background: rgba(255,255,255,0.7); left: 60%; animation-delay: 5s; }
+    .particle:nth-child(7) { width: 2px; height: 2px; background: rgba(255,255,255,0.4); left: 70%; animation-delay: 2.5s; }
+    .particle:nth-child(8) { width: 5px; height: 5px; background: rgba(255,255,255,0.6); left: 80%; animation-delay: 1.5s; }
+    .particle:nth-child(9) { width: 4px; height: 4px; background: rgba(255,255,255,0.3); left: 90%; animation-delay: 4.5s; }
+    .particle:nth-child(10) { width: 3px; height: 3px; background: rgba(255,255,255,0.5); left: 15%; animation-delay: 6s; }
+
+    @keyframes particleFloat {
+      0% { 
+        transform: translateY(100vh) translateX(0px) rotate(0deg);
+        opacity: 0;
+      }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { 
+        transform: translateY(-100px) translateX(100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Floating orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(1px);
+      animation: orbFloat 20s infinite ease-in-out;
+      pointer-events: none;
+    }
+
+    .orb1 {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(255,107,107,0.3) 0%, rgba(255,107,107,0.1) 50%, transparent 100%);
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .orb2 {
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(78,205,196,0.3) 0%, rgba(78,205,196,0.1) 50%, transparent 100%);
+      top: 60%;
+      right: 15%;
+      animation-delay: 7s;
+    }
+
+    .orb3 {
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, rgba(199,121,208,0.4) 0%, rgba(199,121,208,0.1) 50%, transparent 100%);
+      bottom: 20%;
+      left: 20%;
+      animation-delay: 3s;
+    }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0px, 0px) scale(1); }
+      25% { transform: translate(30px, -30px) scale(1.1); }
+      50% { transform: translate(-20px, 20px) scale(0.9); }
+      75% { transform: translate(40px, 10px) scale(1.05); }
+    }
+
+    /* Main container */
+    .main-container {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+      padding: 20px;
+    }
+
+    .glass-card {
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 60px 40px;
+      max-width: 450px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      animation: cardSlideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    @keyframes cardSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(60px) scale(0.9);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Logo */
+    .logo-container {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .logo {
+      font-size: 4rem;
+      background: linear-gradient(135deg, #fff 0%, #f0f0f0 50%, #fff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: logoGlow 3s ease-in-out infinite alternate;
+      position: relative;
+      display: inline-block;
+    }
+
+    .logo::after {
+      content: '✨';
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: logoColorShift 4s ease-in-out infinite;
+    }
+
+    @keyframes logoGlow {
+      0% {
+        filter: drop-shadow(0 0 20px rgba(255,255,255,0.3));
+        transform: scale(1);
+      }
+      100% {
+        filter: drop-shadow(0 0 40px rgba(255,255,255,0.6));
+        transform: scale(1.05);
+      }
+    }
+
+    @keyframes logoColorShift {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
+    /* Typography */
+    .title {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #ffffff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      animation: titleFloat 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes titleFloat {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-5px); }
+    }
+
+    .subtitle {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.1rem;
+      font-weight: 300;
+      margin-bottom: 32px;
+      line-height: 1.6;
+      animation: fadeInUp 1.5s ease-out;
+    }
+
+    /* Typing animation container */
+    .typing-container {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+
+    .typing-text {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 1rem;
+      font-weight: 400;
+      min-height: 1.5em;
+      position: relative;
+    }
+
+    .typing-text::after {
+      content: '|';
+      animation: blink 1s infinite;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    /* Password input */
+    .input-group {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .password-input {
+      width: 100%;
+      padding: 16px 20px;
+      font-size: 1rem;
+      font-weight: 400;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      color: white;
+      outline: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .password-input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+      font-family: 'Inter', Arial, sans-serif;
+    }
+
+    .password-input:focus {
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .error-message {
+      color: #ff6b6b;
+      font-size: 0.9rem;
+      margin-top: 8px;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      min-height: 20px;
+    }
+
+    .error-message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Enhanced button */
+    .enter-button {
+      width: 100%;
+      padding: 16px 32px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0.5;
+      pointer-events: none;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .enter-button.enabled {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .enter-button.enabled:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .enter-button.enabled:active {
+      transform: translateY(-1px);
+    }
+
+    .enter-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .enter-button.enabled:hover::before {
+      left: 100%;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .glass-card {
+        padding: 40px 24px;
+        margin: 20px;
+        border-radius: 20px;
+      }
+
+      .logo {
+        font-size: 3rem;
+      }
+
+      .title {
+        font-size: 2.2rem;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+      }
+
+      .orb1, .orb2, .orb3 {
+        display: none;
+      }
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Loading animation */
+    .loading {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .button-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Particle system -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <!-- Floating orbs -->
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <!-- Main content -->
+  <div class="main-container">
+    <div class="glass-card">
+      <div class="logo-container">
+        <div class="logo">✨</div>
+      </div>
+
+      <h1 class="title">Welcome!</h1>
+      <p class="subtitle">Step into your digital journey</p>
+
+      <div class="typing-container">
+        <div class="typing-text" id="typingText"></div>
+      </div>
+
+      <div class="input-group">
+        <input 
+          type="password" 
+          class="password-input" 
+          id="passwordInput" 
+          placeholder="Enter your secret key"
+          autocomplete="off"
+        >
+        <div class="error-message" id="errorMessage">Incorrect password. Please try again.</div>
+      </div>
+
+      <button class="enter-button" id="enterButton">
+        <div class="button-content">
+          <span id="buttonText">Enter Portal</span>
+          <div class="loading" id="loading"></div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Enhanced typing animation
+    const messages = [
+      { text: "Apki digital journey ki shuruaat", delay: 80 },
+      { text: "Bas ek click door!", delay: 100 },
+      { text: "Naye safar ke liye tayyar hain?", delay: 70 },
+      { text: "Digital World mein Swagat hai!", delay: 90, final: true }
+    ];
+
+    let currentMessage = 0;
+    let currentChar = 0;
+    const typingElement = document.getElementById('typingText');
+
+    function typeMessage() {
+      if (currentMessage < messages.length) {
+        const message = messages[currentMessage];
+        
+        if (currentChar < message.text.length) {
+          typingElement.textContent += message.text[currentChar];
+          currentChar++;
+          setTimeout(typeMessage, message.delay);
+        } else {
+          if (message.final) {
+            // Keep the final message
+            return;
+          }
+          
+          setTimeout(() => {
+            // Clear and move to next message
+            typingElement.textContent = '';
+            currentChar = 0;
+            currentMessage++;
+            setTimeout(typeMessage, 800);
+          }, 1500);
+        }
+      }
+    }
+
+    // Start typing animation after a delay
+    setTimeout(typeMessage, 1000);
+
+    // Password functionality
+    const correctPassword = "loveyou";
+    const passwordInput = document.getElementById('passwordInput');
+    const enterButton = document.getElementById('enterButton');
+    const errorMessage = document.getElementById('errorMessage');
+    const buttonText = document.getElementById('buttonText');
+    const loading = document.getElementById('loading');
+
+    function validatePassword() {
+      const value = passwordInput.value.trim();
+      
+      if (value === '') {
+        enterButton.classList.remove('enabled');
+        errorMessage.classList.remove('show');
+      } else if (value === correctPassword) {
+        enterButton.classList.add('enabled');
+        errorMessage.classList.remove('show');
+      } else {
+        enterButton.classList.remove('enabled');
+        errorMessage.classList.add('show');
+      }
+    }
+
+    passwordInput.addEventListener('input', validatePassword);
+    passwordInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' && enterButton.classList.contains('enabled')) {
+        handleEnter();
+      }
+    });
+
+    function handleEnter() {
+      if (!enterButton.classList.contains('enabled')) return;
+      
+      // Show loading animation
+      buttonText.style.opacity = '0';
+      loading.style.display = 'block';
+      
+      setTimeout(() => {
+        window.location.href = 'place-for-us/main.html';
+      }, 1200);
+    }
+
+    enterButton.addEventListener('click', handleEnter);
+
+    // Service worker registration
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(console.error);
+    }
+
+    // Add some interactive particles on click
+    document.addEventListener('click', (e) => {
+      for (let i = 0; i < 5; i++) {
+        createClickParticle(e.clientX, e.clientY);
+      }
+    });
+
+    function createClickParticle(x, y) {
+      const particle = document.createElement('div');
+      particle.style.cssText = `
+        position: fixed;
+        width: 4px;
+        height: 4px;
+        background: rgba(255,255,255,0.8);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 1000;
+        left: ${x}px;
+        top: ${y}px;
+      `;
+      
+      document.body.appendChild(particle);
+      
+      const angle = Math.random() * Math.PI * 2;
+      const velocity = Math.random() * 100 + 50;
+      const lifetime = Math.random() * 1000 + 500;
+      
+      particle.animate([
+        { 
+          transform: 'translate(0, 0) scale(1)', 
+          opacity: 1 
+        },
+        { 
+          transform: `translate(${Math.cos(angle) * velocity}px, ${Math.sin(angle) * velocity}px) scale(0)`, 
+          opacity: 0 
+        }
+      ], {
+        duration: lifetime,
+        easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+      }).addEventListener('finish', () => {
+        particle.remove();
+      });
+    }
+  </script>
+</body>
+</html>
