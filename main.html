@@ -185,6 +185,7 @@
       object-fit: cover;
       transition: transform 0.3s ease;
       animation: avatarGlow 2s ease-in-out infinite alternate;
+      background: linear-gradient(45deg, #f093fb, #4facfe);
     }
 
     .avatar-img:hover {
@@ -278,6 +279,108 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
+    /* Enhanced relationship counter styles */
+    .relationship-counter {
+      background: linear-gradient(135deg, rgba(240, 147, 251, 0.2), rgba(79, 172, 254, 0.2));
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .relationship-counter::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      animation: counterShine 3s ease-in-out infinite;
+    }
+
+    @keyframes counterShine {
+      0% { left: -100%; }
+      50% { left: 100%; }
+      100% { left: 100%; }
+    }
+
+    .counter-title {
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .days-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      background: linear-gradient(135deg, #ffffff, #f093fb, #4facfe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+      animation: numberPulse 2s ease-in-out infinite;
+      margin-bottom: 0.5rem;
+    }
+
+    @keyframes numberPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .counter-subtitle {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .relationship-date-input {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+    }
+
+    .date-input-label {
+      color: white;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .date-input {
+      background: rgba(255, 255, 255, 0.15);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      color: white;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+      width: 200px;
+      margin: 0 auto;
+    }
+
+    .date-input:focus {
+      border-color: var(--accent-pink);
+      box-shadow: 0 0 20px rgba(240, 147, 251, 0.3);
+    }
+
+    .date-input::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+      cursor: pointer;
+    }
+
     .daily-quote {
       background: rgba(79, 172, 254, 0.2);
       border-radius: 16px;
@@ -318,6 +421,7 @@
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
+      cursor: pointer;
     }
 
     .game-card::before {
@@ -380,6 +484,7 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      cursor: pointer;
     }
 
     .mini-card:hover {
@@ -468,38 +573,83 @@
       text-align: center;
     }
 
-    /* Love jar specific styles */
+    /* Enhanced Love jar specific styles */
     .jar-container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin: 1.5rem 0;
+      gap: 1.5rem;
     }
 
     .jar-visual {
       position: relative;
-      width: 100px;
-      min-height: 80px;
+      width: 200px;
+      height: 250px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      background: linear-gradient(180deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.1) 20%, 
+        rgba(240, 147, 251, 0.15) 40%, 
+        rgba(79, 172, 254, 0.15) 60%, 
+        rgba(245, 87, 108, 0.15) 80%, 
+        rgba(118, 75, 162, 0.2) 100%);
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px 20px 40px 40px;
+      box-shadow: 
+        0 0 30px rgba(240, 147, 251, 0.3),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+      overflow: hidden;
       margin-bottom: 1rem;
     }
 
-    .jar-note {
+    .jar-lid {
       position: absolute;
-      background: rgba(255, 255, 255, 0.9);
+      top: -10px;
+      width: 120px;
+      height: 20px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(200, 200, 200, 0.4));
+      border-radius: 10px;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .jar-notes-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 10px;
+    }
+
+    .jar-note {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 147, 251, 0.8));
       color: #333;
       padding: 0.5rem 0.8rem;
       border-radius: 12px;
-      font-size: 0.9rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      animation: noteFloat 1.5s ease-out forwards;
-      max-width: 120px;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      margin-bottom: 0.5rem;
+      max-width: 90%;
       word-wrap: break-word;
+      opacity: 0;
+      transform: translateY(20px) scale(0.8);
+      animation: noteDropIn 0.6s ease-out forwards;
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
-    @keyframes noteFloat {
+    @keyframes noteDropIn {
       0% {
         opacity: 0;
-        transform: translateY(30px) scale(0.8);
+        transform: translateY(20px) scale(0.8);
+      }
+      50% {
+        opacity: 0.8;
+        transform: translateY(-5px) scale(1.05);
       }
       100% {
         opacity: 1;
@@ -507,33 +657,49 @@
       }
     }
 
-    .jar-bottom {
-      width: 100px;
-      height: 20px;
-      background: linear-gradient(135deg, rgba(240, 147, 251, 0.3), rgba(79, 172, 254, 0.3));
-      border-radius: 0 0 20px 20px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
+    .jar-stats {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1rem;
+      margin: 1rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .jar-count {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--accent-pink);
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 10px rgba(240, 147, 251, 0.5);
     }
 
     .jar-controls {
       display: flex;
-      gap: 0.8rem;
+      gap: 1rem;
       margin: 1rem 0;
       align-items: center;
       flex-wrap: wrap;
       justify-content: center;
+      width: 100%;
     }
 
     .jar-input {
       flex: 1;
-      min-width: 200px;
-      padding: 0.8rem 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.1);
+      min-width: 250px;
+      padding: 1rem 1.2rem;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.15);
       color: white;
       outline: none;
       font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .jar-input:focus {
+      border-color: var(--accent-pink);
+      box-shadow: 0 0 20px rgba(240, 147, 251, 0.3);
     }
 
     .jar-input::placeholder {
@@ -544,17 +710,65 @@
       background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue));
       color: white;
       border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 12px;
+      padding: 1rem 2rem;
+      border-radius: 15px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      font-size: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .action-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .action-btn:hover::before {
+      left: 100%;
     }
 
     .action-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    .action-btn:active {
+      transform: translateY(-1px);
+    }
+
+    .jar-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .secondary-btn {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      padding: 0.8rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .secondary-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     }
 
     .jar-result {
@@ -564,6 +778,17 @@
       border-radius: 12px;
       text-align: center;
       min-height: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .success-message {
+      color: #4ade80;
+      font-weight: 600;
+    }
+
+    .error-message {
+      color: #f87171;
+      font-weight: 600;
     }
 
     /* Notes section */
@@ -707,6 +932,19 @@
         flex-direction: column;
         align-items: stretch;
       }
+
+      .jar-visual {
+        width: 160px;
+        height: 200px;
+      }
+
+      .days-number {
+        font-size: 2rem;
+      }
+
+      .date-input {
+        width: 180px;
+      }
     }
 
     /* Floating heart animation */
@@ -765,12 +1003,12 @@
 
   <!-- Header -->
   <header class="app-header">
-    <img src="assets/cute-heart.gif" alt="Heart" class="main-logo"/>
+    <div class="main-logo">💖</div>
     <h1 class="app-title">🌸 Place for Us 🌸</h1>
     <div class="avatar-section">
-      <img src="assets/bunny.png" class="avatar-img" alt="Bunny" />
+      <div class="avatar-img">🐰</div>
       <span class="love-connector">💙✨</span>
-      <img src="assets/pichu.png" class="avatar-img" alt="Pichu" />
+      <div class="avatar-img">⚡</div>
     </div>
     <div class="welcome-bubble">
       👋 Hi, Bunny & Pichu! Welcome to your magical world!
@@ -781,10 +1019,25 @@
   <main class="main-content">
     <!-- Welcome card -->
     <section class="welcome-card">
-      <h2 class="greeting-title" id="greeting"></h2>
-      <div class="love-message" id="love-msg"></div>
-      <div class="stats-section" id="anniversary"></div>
-      <div class="daily-quote" id="today-quote"></div>
+      <h2 class="greeting-title" id="greeting">Good Day, Lovebirds! 💕</h2>
+      <div class="love-message" id="love-msg">Your love story continues to bloom every day! 🌸</div>
+      
+      <!-- Enhanced Relationship Counter -->
+      <div class="relationship-counter">
+        <div class="counter-title">
+          💕 Our Love Journey 💕
+        </div>
+        <div class="days-number" id="dayCounter">∞</div>
+        <div class="counter-subtitle">Days of being amazing together!</div>
+      </div>
+      
+      <!-- Date Input Section -->
+      <div class="relationship-date-input" id="dateInputSection">
+        <label class="date-input-label">🗓️ When did your love story begin?</label>
+        <input type="date" id="relationshipDate" class="date-input" onchange="setRelationshipDate()">
+      </div>
+      
+      <div class="daily-quote" id="today-quote">"Love is not just looking at each other, it's looking in the same direction together." ✨</div>
     </section>
 
     <!-- Games section -->
@@ -806,67 +1059,505 @@
           <span class="game-icon">✏️</span>
           <span class="game-title">Couple Quiz</span>
         </a>
-        <a href="#" class="game-card" onclick="event.preventDefault(); showModal('lovejar')">
+        <div class="game-card" onclick="showModal('lovejar')">
           <span class="game-icon">🍯</span>
           <span class="game-title">Love Jar</span>
-        </a>
-        <a href="#" class="game-card" onclick="event.preventDefault(); showModal('notes')">
+        </div>
+        <div class="game-card" onclick="showModal('notes')">
           <span class="game-icon">💌</span>
           <span class="game-title">Love Notes</span>
-        </a>
+        </div>
       </div>
 
       <div class="mini-section">
-        <a href="#" class="mini-card" onclick="event.preventDefault(); showModal('playlist')">🎶 Our Playlist</a>
-        <a href="#" class="mini-card" onclick="event.preventDefault(); showModal('goals')">🎯 Couple Goals</a>
+        <div class="mini-card" onclick="showModal('playlist')">🎶 Our Playlist</div>
+        <div class="mini-card" onclick="showModal('goals')">🎯 Couple Goals</div>
       </div>
     </section>
   </main>
 
-  <!-- Love Jar Modal -->
+  <!-- Enhanced Love Jar Modal -->
   <div id="lovejar" class="modal-section">
-  <div class="modal-content">
-    <button class="close-btn" onclick="hideModal('lovejar')">&times;</button>
-    <h2 class="modal-title">🍯 The Love Jar</h2>
-    <div class="jar-container">
-      <input id="jarInput" class="jar-input" placeholder="Write your love note..." />
-      <button id="jarBtn" class="action-btn">Add Note</button>
-      <div id="jarResult" class="jar-result"></div>
+    <div class="modal-content">
+      <button class="close-btn" onclick="hideModal('lovejar')">&times;</button>
+      <h2 class="modal-title">🍯 The Love Jar</h2>
+      
+      <div class="jar-container">
+        <!-- Visual Jar -->
+        <div class="jar-visual">
+          <div class="jar-lid"></div>
+          <div class="jar-notes-container" id="jarNotesContainer">
+            <!-- Notes will appear here -->
+          </div>
+        </div>
+        
+        <!-- Jar Statistics -->
+        <div class="jar-stats">
+          <div class="jar-count" id="jarCount">0</div>
+          <div>Love Notes Collected</div>
+        </div>
+        
+        <!-- Input Controls -->
+        <div class="jar-controls">
+          <input id="jarInput" class="jar-input" placeholder="Write your love note..." maxlength="100" />
+          <button id="jarBtn" class="action-btn" onclick="addLoveNote()">Add Note 💖</button>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="jar-actions">
+          <button class="secondary-btn" onclick="getRandomNote()">Random Note 🎲</button>
+          <button class="secondary-btn" onclick="clearAllNotes()">Clear Jar 🗑️</button>
+        </div>
+        
+        <!-- Result Display -->
+        <div id="jarResult" class="jar-result"></div>
+      </div>
     </div>
   </div>
-</div>
-<div id="playlist" class="modal-section">
-  <div class="modal-content">
-    <button class="close-btn" onclick="hideModal('playlist')">&times;</button>
-    <h2 class="modal-title">🎶 Our Playlist</h2>
-    <div class="playlist-container">
-<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/56Iis0WFBKkl5V3hkBrlR5?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-      <div id="playlistResult" class="jar-result">Enjoy our Spotify playlist above!</div>
+
+  <!-- Playlist Modal -->
+  <div id="playlist" class="modal-section">
+    <div class="modal-content">
+      <button class="close-btn" onclick="hideModal('playlist')">&times;</button>
+      <h2 class="modal-title">🎶 Our Playlist</h2>
+      <div class="playlist-container">
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX0XUsuxWHRQd?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <div id="playlistResult" class="jar-result">Enjoy our love songs playlist above! 🎵</div>
+      </div>
     </div>
   </div>
-</div>
-<div id="notes" class="modal-section">
-  <div class="modal-content">
-    <button class="close-btn" onclick="hideModal('notes')">&times;</button>
-    <h2 class="modal-title">💌 Love Notes</h2>
-    <div class="notes-container">
-      <textarea id="notesInput" class="notes-input" placeholder="Write your love notes here..."></textarea>
-      <button id="notesBtn" class="action-btn">Add Note</button>
-      <ul id="notesList" class="notes-list"></ul>
+
+  <!-- Notes Modal -->
+  <div id="notes" class="modal-section">
+    <div class="modal-content">
+      <button class="close-btn" onclick="hideModal('notes')">&times;</button>
+      <h2 class="modal-title">💌 Love Notes</h2>
+      <div class="notes-container">
+        <textarea id="notesInput" class="notes-input" placeholder="Write your love notes here..."></textarea>
+        <button id="notesBtn" class="action-btn" onclick="addNote()">Add Note</button>
+        <ul id="notesList" class="notes-list"></ul>
+      </div>
     </div>
   </div>
-</div>
-<div id="goals" class="modal-section">
-  <div class="modal-content">
-    <button class="close-btn" onclick="hideModal('goals')">&times;</button>
-    <h2 class="modal-title">🎯 Couple Goals</h2>
-    <div class="goals-container">
-      <form id="goalsForm" class="goals-form">
-        <input type="text" id="goalInput" class="goal-input" placeholder="Add a new goal..." />
-        <button type="submit" class="action-btn">Add Goal</button>
-      </form>
-      <ul id="goalsList" class="goals-list"></ul>
+
+  <!-- Goals Modal -->
+  <div id="goals" class="modal-section">
+    <div class="modal-content">
+      <button class="close-btn" onclick="hideModal('goals')">&times;</button>
+      <h2 class="modal-title">🎯 Couple Goals</h2>
+      <div class="goals-container">
+        <form id="goalsForm" class="goals-form" onsubmit="addGoal(event)">
+          <input type="text" id="goalInput" class="goal-input" placeholder="Add a new goal..." />
+          <button type="submit" class="action-btn">Add Goal</button>
+        </form>
+        <ul id="goalsList" class="goals-list"></ul>
+      </div>
     </div>
   </div>
-</div>
-<script src="main.js"></script>
+
+  <script>
+    // Love Jar functionality
+    let loveNotes = JSON.parse(window.localStorage?.getItem('loveNotes') || '[]');
+    let notes = JSON.parse(window.localStorage?.getItem('notes') || '[]');
+    let goals = JSON.parse(window.localStorage?.getItem('goals') || '[]');
+
+    // Relationship counter functionality
+    let relationshipStartDate = window.localStorage?.getItem('relationshipStartDate');
+
+    // Initialize the app
+    document.addEventListener('DOMContentLoaded', function() {
+      updateJarVisual();
+      loadNotes();
+      loadGoals();
+      updateGreeting();
+      initializeRelationshipCounter();
+      
+      // Update counter every day at midnight
+      setInterval(updateDayCounter, 1000 * 60 * 60); // Check every hour
+    });
+
+    // Relationship Counter Functions
+    function initializeRelationshipCounter() {
+      if (relationshipStartDate) {
+        document.getElementById('relationshipDate').value = relationshipStartDate;
+        updateDayCounter();
+        hideInitialDateInput();
+      } else {
+        showInitialDateInput();
+      }
+    }
+
+    function setRelationshipDate() {
+      const dateInput = document.getElementById('relationshipDate');
+      const selectedDate = dateInput.value;
+      
+      if (selectedDate) {
+        relationshipStartDate = selectedDate;
+        if (window.localStorage) {
+          window.localStorage.setItem('relationshipStartDate', selectedDate);
+        }
+        updateDayCounter();
+        hideInitialDateInput();
+        createFloatingHeart();
+        
+        // Show success message
+        setTimeout(() => {
+          alert('🎉 Your love story date has been saved! 💕');
+        }, 500);
+      }
+    }
+
+    function updateDayCounter() {
+      const counterElement = document.getElementById('dayCounter');
+      
+      if (!relationshipStartDate) {
+        counterElement.textContent = '∞';
+        return;
+      }
+      
+      const startDate = new Date(relationshipStartDate);
+      const currentDate = new Date();
+      
+      // Calculate the difference in time
+      const timeDifference = currentDate.getTime() - startDate.getTime();
+      
+      // Calculate the difference in days
+      const daysDifference = Math.floor(timeDifference / (1000 * 3600 * 24));
+      
+      // Handle edge cases
+      if (daysDifference < 0) {
+        counterElement.textContent = '💫';
+        return;
+      }
+      
+      // Add some special messages for milestones
+      const milestoneMessage = getMilestoneMessage(daysDifference);
+      if (milestoneMessage) {
+        setTimeout(() => {
+          alert(milestoneMessage);
+        }, 1000);
+      }
+      
+      // Animate the number change
+      animateCounter(counterElement, daysDifference);
+    }
+
+    function animateCounter(element, targetNumber) {
+      const currentNumber = parseInt(element.textContent) || 0;
+      const increment = targetNumber > currentNumber ? 1 : -1;
+      const stepTime = Math.abs(Math.floor(500 / (targetNumber - currentNumber))) || 50;
+      
+      if (currentNumber === targetNumber) {
+        element.textContent = targetNumber;
+        return;
+      }
+      
+      let current = currentNumber;
+      const timer = setInterval(() => {
+        current += increment;
+        element.textContent = current;
+        
+        if (current === targetNumber) {
+          clearInterval(timer);
+        }
+      }, stepTime);
+    }
+
+    function getMilestoneMessage(days) {
+      const milestones = {
+        1: "🎉 One day together! The beginning of something beautiful! 💕",
+        7: "🌟 One week of love! Every day gets better! 💖",
+        30: "🎊 One month together! Time flies when you're in love! 💝",
+        100: "💯 100 days of love! You're absolutely amazing together! 🎉",
+        365: "🎂 One year of pure love! Happy anniversary! 💕✨",
+        500: "🌟 500 days! Your love story is truly magical! 💖",
+        1000: "🎊 1000 days! A milestone of eternal love! 💝🎉"
+      };
+      
+      return milestones[days] || null;
+    }
+
+    function showInitialDateInput() {
+      document.getElementById('dateInputSection').style.display = 'block';
+    }
+
+    function hideInitialDateInput() {
+      document.getElementById('dateInputSection').style.display = 'none';
+    }
+
+    // Reset relationship date function (can be called from browser console)
+    function resetRelationshipDate() {
+      if (confirm('Are you sure you want to reset your relationship start date?')) {
+        if (window.localStorage) {
+          window.localStorage.removeItem('relationshipStartDate');
+        }
+        relationshipStartDate = null;
+        document.getElementById('relationshipDate').value = '';
+        document.getElementById('dayCounter').textContent = '∞';
+        showInitialDateInput();
+      }
+    }
+
+    // Modal functions
+    function showModal(modalId) {
+      const modal = document.getElementById(modalId);
+      modal.classList.add('visible');
+      modal.style.display = 'flex';
+      
+      // Add click outside to close
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          hideModal(modalId);
+        }
+      });
+    }
+
+    function hideModal(modalId) {
+      const modal = document.getElementById(modalId);
+      modal.classList.remove('visible');
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 300);
+    }
+
+    // Enhanced Love Jar Functions
+    function addLoveNote() {
+      const input = document.getElementById('jarInput');
+      const result = document.getElementById('jarResult');
+      const note = input.value.trim();
+      
+      if (!note) {
+        result.innerHTML = '<span class="error-message">Please write a love note first! 💕</span>';
+        return;
+      }
+      
+      if (note.length > 100) {
+        result.innerHTML = '<span class="error-message">Keep it under 100 characters! ✨</span>';
+        return;
+      }
+      
+      // Add note with timestamp
+      const newNote = {
+        text: note,
+        date: new Date().toLocaleDateString(),
+        id: Date.now()
+      };
+      
+      loveNotes.push(newNote);
+      if (window.localStorage) {
+        window.localStorage.setItem('loveNotes', JSON.stringify(loveNotes));
+      }
+      
+      // Clear input
+      input.value = '';
+      
+      // Update visual
+      updateJarVisual();
+      
+      // Show success message
+      result.innerHTML = '<span class="success-message">Love note added to the jar! 💖</span>';
+      
+      // Create floating heart effect
+      createFloatingHeart();
+      
+      // Clear message after 3 seconds
+      setTimeout(() => {
+        result.innerHTML = '';
+      }, 3000);
+    }
+
+    function updateJarVisual() {
+      const container = document.getElementById('jarNotesContainer');
+      const countElement = document.getElementById('jarCount');
+      
+      // Update count
+      countElement.textContent = loveNotes.length;
+      
+      // Clear existing notes
+      container.innerHTML = '';
+      
+      // Show last 5 notes in jar visual
+      const recentNotes = loveNotes.slice(-5);
+      recentNotes.forEach((note, index) => {
+        const noteElement = document.createElement('div');
+        noteElement.className = 'jar-note';
+        noteElement.textContent = note.text;
+        noteElement.style.animationDelay = `${index * 0.1}s`;
+        
+        // Random positioning for a more natural look
+        const randomLeft = Math.random() * 20 - 10; // -10% to 10%
+        noteElement.style.transform = `translateX(${randomLeft}px)`;
+        
+        container.appendChild(noteElement);
+      });
+    }
+
+    function getRandomNote() {
+      const result = document.getElementById('jarResult');
+      
+      if (loveNotes.length === 0) {
+        result.innerHTML = '<span class="error-message">The jar is empty! Add some love notes first 💕</span>';
+        return;
+      }
+      
+      const randomNote = loveNotes[Math.floor(Math.random() * loveNotes.length)];
+      result.innerHTML = `
+        <div style="background: rgba(255, 255, 255, 0.2); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.3);">
+          <div style="font-size: 1.1rem; margin-bottom: 0.5rem;">"${randomNote.text}"</div>
+          <div style="font-size: 0.9rem; opacity: 0.8;">Added on ${randomNote.date} 💖</div>
+        </div>
+      `;
+      
+      createFloatingHeart();
+    }
+
+    function clearAllNotes() {
+      if (loveNotes.length === 0) {
+        document.getElementById('jarResult').innerHTML = '<span class="error-message">The jar is already empty! 🍯</span>';
+        return;
+      }
+      
+      if (confirm('Are you sure you want to clear all love notes? This cannot be undone! 💔')) {
+        loveNotes = [];
+        if (window.localStorage) {
+          window.localStorage.removeItem('loveNotes');
+        }
+        updateJarVisual();
+        document.getElementById('jarResult').innerHTML = '<span class="success-message">Love jar cleared! Ready for new memories 💖</span>';
+      }
+    }
+
+    function createFloatingHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.innerHTML = '💖';
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      heart.style.top = window.innerHeight - 100 + 'px';
+      document.body.appendChild(heart);
+      
+      setTimeout(() => {
+        heart.remove();
+      }, 2000);
+    }
+
+    // Allow Enter key to add note
+    document.getElementById('jarInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        addLoveNote();
+      }
+    });
+
+    // Notes functionality
+    function addNote() {
+      const input = document.getElementById('notesInput');
+      const noteText = input.value.trim();
+      
+      if (!noteText) return;
+      
+      const newNote = {
+        text: noteText,
+        date: new Date().toLocaleDateString(),
+        id: Date.now()
+      };
+      
+      notes.push(newNote);
+      if (window.localStorage) {
+        window.localStorage.setItem('notes', JSON.stringify(notes));
+      }
+      input.value = '';
+      loadNotes();
+    }
+
+    function loadNotes() {
+      const notesList = document.getElementById('notesList');
+      notesList.innerHTML = '';
+      
+      notes.slice().reverse().forEach(note => {
+        const li = document.createElement('li');
+        li.className = 'note-item';
+        li.innerHTML = `
+          <div class="note-date">${note.date}</div>
+          <div>${note.text}</div>
+        `;
+        notesList.appendChild(li);
+      });
+    }
+
+    // Goals functionality
+    function addGoal(event) {
+      event.preventDefault();
+      const input = document.getElementById('goalInput');
+      const goalText = input.value.trim();
+      
+      if (!goalText) return;
+      
+      const newGoal = {
+        text: goalText,
+        completed: false,
+        id: Date.now()
+      };
+      
+      goals.push(newGoal);
+      if (window.localStorage) {
+        window.localStorage.setItem('goals', JSON.stringify(goals));
+      }
+      input.value = '';
+      loadGoals();
+    }
+
+    function loadGoals() {
+      const goalsList = document.getElementById('goalsList');
+      goalsList.innerHTML = '';
+      
+      goals.forEach(goal => {
+        const li = document.createElement('li');
+        li.className = 'goal-item';
+        li.innerHTML = `
+          <div class="goal-checkbox ${goal.completed ? 'completed' : ''}" onclick="toggleGoal(${goal.id})">
+            ${goal.completed ? '✓' : ''}
+          </div>
+          <div class="goal-text ${goal.completed ? 'completed' : ''}">${goal.text}</div>
+        `;
+        goalsList.appendChild(li);
+      });
+    }
+
+    function toggleGoal(goalId) {
+      goals = goals.map(goal => 
+        goal.id === goalId ? {...goal, completed: !goal.completed} : goal
+      );
+      if (window.localStorage) {
+        window.localStorage.setItem('goals', JSON.stringify(goals));
+      }
+      loadGoals();
+    }
+
+    // Update greeting based on time
+    function updateGreeting() {
+      const hour = new Date().getHours();
+      const greetingElement = document.getElementById('greeting');
+      
+      let greeting;
+      if (hour < 12) {
+        greeting = "Good Morning, Lovebirds! 🌅";
+      } else if (hour < 18) {
+        greeting = "Good Afternoon, Sweethearts! ☀️";
+      } else {
+        greeting = "Good Evening, My Loves! 🌙";
+      }
+      
+      greetingElement.textContent = greeting;
+    }
+
+    // Close modals with Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const visibleModal = document.querySelector('.modal-section.visible');
+        if (visibleModal) {
+          hideModal(visibleModal.id);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
