@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Couple Quiz - Place for Us</title>
+  <title>Couples Quiz — Bunny & Pichu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -13,444 +12,829 @@
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .quiz-container {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-radius: 24px;
-      padding: 40px;
-      max-width: 500px;
-      width: 100%;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-      text-align: center;
       position: relative;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
-    .quiz-container::before {
+    /* Cute floating elements */
+    body::before {
       content: '';
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
-      background-size: 300% 100%;
-      animation: shimmer 3s ease-in-out infinite;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M10 3l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z'/%3E%3C/g%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M15 5c5 0 10 5 10 10s-5 10-10 10S5 20 5 15 10 5 15 5zm0 15c3 0 5-2 5-5s-2-5-5-5-5 2-5 5 2 5 5 5z'/%3E%3C/g%3E%3C/svg%3E");
+      animation: float 15s ease-in-out infinite;
+      pointer-events: none;
     }
 
-    @keyframes shimmer {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(180deg); }
+    }
+
+    /* Glass effect */
+    .glass {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(15px);
+      border-radius: 25px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+      position: relative;
+    }
+
+    .mini-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin: 0 10px;
+      border: 3px solid rgba(255, 255, 255, 0.5);
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    .vs {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ff6b9d;
+      text-shadow: 2px 2px 4px rgba(255,107,157,0.3);
+      margin: 0 15px;
     }
 
     h1 {
-      font-size: 2.5em;
-      font-weight: 700;
-      margin-bottom: 10px;
-      background: linear-gradient(45deg, #667eea, #764ba2);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-size: 2.5rem;
+      color: #ff6b9d;
+      text-shadow: 3px 3px 0px #ffd1dc, 6px 6px 0px #ffb6c1;
+      margin: 1rem 0;
+      animation: bounce-text 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce-text {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
     }
 
     .subtitle {
-      color: #666;
-      margin-bottom: 30px;
-      font-weight: 300;
+      color: #ff8fa3;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      text-shadow: 1px 1px 2px rgba(255,143,163,0.3);
     }
 
-    .question-counter {
-      background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-      color: white;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 0.9em;
-      font-weight: 600;
-      margin-bottom: 25px;
-      display: inline-block;
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1rem 2rem;
     }
 
-    #quiz-box {
-      background: linear-gradient(135deg, #f8f9ff 0%, #e8efff 100%);
-      border-radius: 20px;
-      padding: 35px 25px;
-      margin-bottom: 30px;
-      font-size: 1.2em;
-      font-weight: 400;
-      min-height: 120px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.1);
-      border: 2px solid rgba(102, 126, 234, 0.1);
-      transition: all 0.3s ease;
-      color: #333;
-      line-height: 1.6;
+    /* Cute box styling */
+    .cute-box {
+      padding: 2rem;
+      margin: 1.5rem 0;
+      position: relative;
     }
 
-    #quiz-box:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 35px rgba(102, 126, 234, 0.15);
+    .cute-box::before {
+      content: '✨';
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      font-size: 1.5rem;
+      animation: sparkle 2s ease-in-out infinite;
     }
 
-    .button-container {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 25px;
+    .cute-box::after {
+      content: '💖';
+      position: absolute;
+      top: -10px;
+      right: 20px;
+      font-size: 1.5rem;
+      animation: sparkle 2s ease-in-out infinite reverse;
     }
 
-    button {
-      background: linear-gradient(45deg, #667eea, #764ba2);
-      color: white;
+    @keyframes sparkle {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.2) rotate(180deg); }
+    }
+
+    /* Rainbow button effect */
+    .rainbow-btn {
+      background: linear-gradient(45deg, #ff9a9e, #fecfef, #fecfef, #ff9a9e);
+      background-size: 400% 400%;
+      animation: rainbow 3s ease infinite;
       border: none;
-      border-radius: 15px;
-      padding: 15px 30px;
-      font-size: 1em;
-      font-weight: 600;
+      color: #ff1744;
+      font-weight: bold;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
       position: relative;
       overflow: hidden;
     }
 
-    button::before {
+    .rainbow-btn::before {
       content: '';
       position: absolute;
       top: 0;
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: left 0.6s ease;
     }
 
-    button:hover::before {
+    .rainbow-btn:hover::before {
       left: 100%;
     }
 
-    button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    button:active {
-      transform: translateY(-1px);
+    .rainbow-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
     }
 
-    .back-link {
-      color: #667eea;
-      text-decoration: none;
-      font-weight: 500;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.3s ease;
-      padding: 10px 15px;
-      border-radius: 10px;
+    /* Quiz specific styles */
+    .quiz-title {
+      color: #ff6b9d;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 0px #ffd1dc;
     }
 
-    .back-link:hover {
-      background: rgba(102, 126, 234, 0.1);
-      transform: translateX(-3px);
+    .quiz-subtitle {
+      color: #ff8fa3;
+      font-size: 1rem;
+      font-weight: bold;
     }
 
-    .chat-section {
-      margin-top: 30px;
-      border-top: 2px solid rgba(102, 126, 234, 0.1);
-      padding-top: 25px;
-    }
-
-    .chat-title {
-      font-size: 1.2em;
-      font-weight: 600;
-      color: #667eea;
-      margin-bottom: 15px;
-    }
-
-    .chat-box {
-      background: #f8f9ff;
-      border-radius: 15px;
-      height: 200px;
-      overflow-y: auto;
-      padding: 15px;
-      margin-bottom: 15px;
-      border: 2px solid rgba(102, 126, 234, 0.1);
-      scroll-behavior: smooth;
-    }
-
-    .message {
-      margin-bottom: 12px;
-      padding: 8px 12px;
-      border-radius: 12px;
-      max-width: 80%;
-      word-wrap: break-word;
-      animation: messageSlideIn 0.3s ease;
-    }
-
-    @keyframes messageSlideIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .message.bunny {
-      background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-      color: white;
-      margin-left: auto;
-      text-align: right;
-    }
-
-    .message.pichu {
-      background: linear-gradient(135deg, #4ecdc4, #6fd8d2);
-      color: white;
-      margin-right: auto;
-      text-align: left;
-    }
-
-    .message-name {
-      font-size: 0.8em;
-      font-weight: 600;
-      margin-bottom: 3px;
-      opacity: 0.9;
-    }
-
-    .message-text {
-      font-size: 0.9em;
-      line-height: 1.4;
-    }
-
-    .chat-input-container {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-
-    .name-selector {
-      background: white;
-      border: 2px solid rgba(102, 126, 234, 0.2);
-      border-radius: 10px;
-      padding: 10px;
-      font-size: 0.9em;
-      min-width: 80px;
-      color: #667eea;
-      font-weight: 500;
-    }
-
-    .chat-input {
-      flex: 1;
-      background: white;
-      border: 2px solid rgba(102, 126, 234, 0.2);
-      border-radius: 10px;
-      padding: 10px 15px;
-      font-size: 0.9em;
-      outline: none;
-      transition: border-color 0.3s ease;
-    }
-
-    .chat-input:focus {
-      border-color: #667eea;
-    }
-
-    .send-btn {
-      background: linear-gradient(45deg, #4ecdc4, #44a08d);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      padding: 10px 20px;
-      cursor: pointer;
-      font-size: 0.9em;
-      font-weight: 600;
-      transition: all 0.3s ease;
-    }
-
-    .send-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
-    }
-
-    .hearts {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
+    /* Progress bar */
+    .progress-container {
+      margin: 1.5rem 0;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 25px;
+      height: 15px;
       overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #ff9a9e, #fecfef);
+      border-radius: 25px;
+      width: 0%;
+      transition: width 0.5s ease;
+      position: relative;
+    }
+
+    .progress-bar::after {
+      content: '';
+      position: absolute;
       top: 0;
       left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+      animation: shimmer 2s infinite;
     }
 
-    .heart {
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .progress-text {
+      text-align: center;
+      color: #ff6b9d;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    /* Question styling */
+    .question-card {
+      text-align: center;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .question-number {
+      color: #ff8fa3;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      font-weight: bold;
+    }
+
+    .question-text {
+      color: #ff1744;
+      font-size: 1.3rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(255,23,68,0.2);
+    }
+
+    /* Answer options */
+    .answer-options {
+      display: grid;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .answer-option {
+      padding: 1rem 1.5rem;
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-radius: 20px;
+      color: #ff1744;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      font-weight: bold;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .answer-option::before {
+      content: '';
       position: absolute;
-      color: rgba(255, 107, 107, 0.3);
-      font-size: 20px;
-      animation: float 6s ease-in-out infinite;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s ease;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      33% { transform: translateY(-10px) rotate(5deg); }
-      66% { transform: translateY(5px) rotate(-3deg); }
+    .answer-option:hover {
+      background: rgba(255, 255, 255, 0.35);
+      border-color: #ff6b9d;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
     }
 
-    @media (max-width: 600px) {
-      .quiz-container {
-        padding: 30px 20px;
-        margin: 10px;
+    .answer-option:hover::before {
+      left: 100%;
+    }
+
+    .answer-option.selected {
+      background: linear-gradient(135deg, #ff9a9e, #fecfef);
+      border-color: #ff6b9d;
+      transform: scale(1.02);
+      box-shadow: 0 5px 20px rgba(255, 107, 157, 0.4);
+    }
+
+    .answer-option.correct {
+      background: linear-gradient(135deg, #69f0ae, #00e676);
+      animation: pulse-green 0.6s ease;
+    }
+
+    .answer-option.incorrect {
+      background: linear-gradient(135deg, #ff5722, #f44336);
+      animation: shake 0.6s ease;
+    }
+
+    @keyframes pulse-green {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    /* Navigation buttons */
+    .quiz-navigation {
+      display: flex;
+      justify-content: space-between;
+      margin: 2rem 0;
+    }
+
+    .nav-button {
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-button.primary {
+      background: linear-gradient(45deg, #ff9a9e, #fecfef);
+      color: #ff1744;
+    }
+
+    .nav-button.secondary {
+      background: rgba(255, 255, 255, 0.3);
+      color: #ff6b9d;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .nav-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
+    }
+
+    .nav-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Results */
+    .results-container {
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+
+    .results-score {
+      font-size: 3rem;
+      color: #ff6b9d;
+      text-shadow: 3px 3px 0px #ffd1dc;
+      margin-bottom: 1rem;
+      animation: bounce-text 2s ease-in-out infinite;
+    }
+
+    .results-message {
+      color: #ff1744;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+      text-shadow: 1px 1px 2px rgba(255,23,68,0.2);
+    }
+
+    .results-details {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      color: #ff1744;
+      font-weight: bold;
+    }
+
+    /* Start screen */
+    .start-screen {
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+
+    .start-button {
+      padding: 1rem 3rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      background: linear-gradient(45deg, #ff9a9e, #fecfef);
+      color: #ff1744;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 2rem 0;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
+    }
+
+    .start-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .start-button:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 10px 25px rgba(255, 107, 157, 0.4);
+    }
+
+    .start-button:hover::before {
+      left: 100%;
+    }
+
+    /* Sparkle animations */
+    .sparkle {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: #ff6b9d;
+      border-radius: 50%;
+      animation: sparkle-fall 4s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes sparkle-fall {
+      0% {
+        transform: translateY(-100px) scale(0) rotate(0deg);
+        opacity: 1;
       }
-      
-      h1 {
-        font-size: 2em;
+      100% {
+        transform: translateY(100vh) scale(1) rotate(360deg);
+        opacity: 0;
       }
-      
-      #quiz-box {
-        font-size: 1.1em;
-        padding: 25px 20px;
-      }
-      
-      .button-container {
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      button {
-        width: 100%;
-        max-width: 250px;
-      }
+    }
+
+    .back {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      color: #ff6b9d;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 25px;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .back:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 { font-size: 2rem; }
+      .subtitle { font-size: 1rem; }
+      .cute-box { padding: 1rem; }
+      .question-text { font-size: 1.1rem; }
+      .answer-option { padding: 0.8rem 1rem; }
+      .mini-avatar { width: 50px; height: 50px; }
     }
   </style>
 </head>
 <body>
-  <div class="quiz-container">
-    <div class="hearts">
-      <div class="heart" style="left: 10%; animation-delay: 0s;">💝</div>
-      <div class="heart" style="left: 20%; animation-delay: 1s;">💕</div>
-      <div class="heart" style="left: 80%; animation-delay: 2s;">💖</div>
-      <div class="heart" style="left: 90%; animation-delay: 3s;">💗</div>
-    </div>
-    
-    <h1>💑 Couple Quiz</h1>
-    <p class="subtitle">Discover more about each other</p>
-    
-    <div class="question-counter">
-      Question <span id="current-q">1</span> of <span id="total-q">7</span>
-    </div>
-    
-    <div id="quiz-box"></div>
-    
-    <div class="button-container">
-      <button onclick="nextQuestion()">Next Question ➡️</button>
+  <header>
+    <img src="data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='25' fill='%23FFB6C1'/%3E%3Ccircle cx='25' cy='25' r='3' fill='%23000'/%3E%3Ccircle cx='35' cy='25' r='3' fill='%23000'/%3E%3Cpath d='M20 35 Q30 45 40 35' stroke='%23000' stroke-width='2' fill='none'/%3E%3Cpath d='M15 20 Q10 15 15 10' stroke='%23FFB6C1' stroke-width='3' fill='none'/%3E%3Cpath d='M45 20 Q50 15 45 10' stroke='%23FFB6C1' stroke-width='3' fill='none'/%3E%3C/svg%3E" class="mini-avatar" alt="Bunny" />
+    <span class="vs">vs</span>
+    <img src="data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='25' fill='%23FFD700'/%3E%3Ccircle cx='25' cy='25' r='3' fill='%23000'/%3E%3Ccircle cx='35' cy='25' r='3' fill='%23000'/%3E%3Cpath d='M20 35 Q30 40 40 35' stroke='%23000' stroke-width='2' fill='none'/%3E%3Cpath d='M15 15 L20 10 L18 20' fill='%23000'/%3E%3Cpath d='M45 15 L40 10 L42 20' fill='%23000'/%3E%3Ccircle cx='22' cy='22' r='2' fill='%23FF0000'/%3E%3Ccircle cx='38' cy='22' r='2' fill='%23FF0000'/%3E%3C/svg%3E" class="mini-avatar" alt="Pichu" />
+    <h1>Couples Quiz</h1>
+    <div class="subtitle">Sweet Knowledge Test for Two Hearts 💞</div>
+  </header>
+
+  <main>
+    <!-- Start Screen -->
+    <div id="start-screen" class="cute-box glass start-screen">
+      <div class="quiz-header">
+        <div class="quiz-title">Ready for a Sweet Challenge? 💖</div>
+        <div class="quiz-subtitle">Let's see how well you know each other!</div>
+      </div>
+      
+      <div class="glass cute-box" style="margin: 2rem 0;">
+        <h3 style="color: #ff6b9d; margin-bottom: 1rem; font-weight: bold;">🌸 How to Play:</h3>
+        <div style="color: #ff1744; text-align: left; line-height: 1.8; font-weight: bold;">
+          🌸 Take turns answering questions<br>
+          💫 Choose what you think your partner would pick<br>
+          🎯 Discover how well you know each other<br>
+          💕 Have fun learning new things together
+        </div>
+      </div>
+      
+      <button class="start-button rainbow-btn" onclick="startQuiz()">
+        🚀 Start Our Love Quiz!
+      </button>
     </div>
 
-    <div class="chat-section">
-      <div class="chat-title">💬 Chat About This Question</div>
-      <div class="chat-box" id="chatBox"></div>
-      <div class="chat-input-container">
-        <select class="name-selector" id="nameSelector">
-          <option value="bunny">🐰 Bunny</option>
-          <option value="pichu">⚡ Pichu</option>
-        </select>
-        <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." maxlength="200">
-        <button class="send-btn" onclick="sendMessage()">Send</button>
+    <!-- Quiz Screen -->
+    <div id="quiz-screen" class="cute-box glass" style="display: none;">
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <div class="progress-text" id="progress-text">Question 1 of 10</div>
+
+      <div class="question-card glass cute-box">
+        <div class="question-number" id="question-number">Question 1</div>
+        <div class="question-text" id="question-text">Loading question...</div>
+        
+        <div class="answer-options" id="answer-options">
+          <!-- Options will be populated by JavaScript -->
+        </div>
+      </div>
+
+      <div class="quiz-navigation">
+        <button class="nav-button secondary rainbow-btn" id="prev-btn" onclick="prevQuestion()" disabled>⬅️ Previous</button>
+        <button class="nav-button primary rainbow-btn" id="next-btn" onclick="nextQuestion()" disabled>Next ➡️</button>
       </div>
     </div>
-    
-    <a href="../../main.html" class="back-link">⬅️ Back to Home</a>
-  </div>
+
+    <!-- Results Screen -->
+    <div id="results-screen" class="cute-box glass results-container" style="display: none;">
+      <div class="results-score" id="final-score">85%</div>
+      <div class="results-message" id="results-message">You two are absolutely adorable together! 💕</div>
+      
+      <div class="results-details glass cute-box">
+        <h3 style="margin-bottom: 1rem; color: #ff6b9d;">💖 Your Love Stats:</h3>
+        <div id="results-breakdown"></div>
+      </div>
+      
+      <div style="margin-top: 2rem;">
+        <button class="start-button rainbow-btn" onclick="restartQuiz()">🔄 Take Quiz Again</button>
+      </div>
+    </div>
+
+    <!-- Floating sparkles -->
+    <div class="sparkle" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="sparkle" style="left: 20%; animation-delay: 1s;"></div>
+    <div class="sparkle" style="left: 30%; animation-delay: 2s;"></div>
+    <div class="sparkle" style="left: 40%; animation-delay: 0.5s;"></div>
+    <div class="sparkle" style="left: 50%; animation-delay: 1.5s;"></div>
+    <div class="sparkle" style="left: 60%; animation-delay: 2.5s;"></div>
+    <div class="sparkle" style="left: 70%; animation-delay: 0.8s;"></div>
+    <div class="sparkle" style="left: 80%; animation-delay: 1.8s;"></div>
+    <div class="sparkle" style="left: 90%; animation-delay: 2.8s;"></div>
+
+    <a href="../../main.html" class="back">⬅️ Back</a>
+  </main>
 
   <script>
-    const questions = [
-      "Who said 'I love you' first?",
-      "Bunny, what's Pichu's favorite color?",
-      "Pichu, what's Bunny's go-to comfort food?",
-      "Your cutest memory together?",
-      "What's each other's hidden talent?",
-      "Who is more likely to say sorry after a fight?",
-      "What's a place you both want to visit?"
+    // Sample quiz questions for couples
+    const quizQuestions = [
+      {
+        question: "What's your partner's favorite way to spend a weekend? 🌸",
+        options: [
+          "🎬 Cuddling at home with movies",
+          "🌲 Adventure outdoors together",
+          "🍽️ Romantic dinner date",
+          "🛍️ Shopping and exploring"
+        ],
+        category: "lifestyle"
+      },
+      {
+        question: "Which gift would make your partner happiest? 💝",
+        options: [
+          "💌 A handwritten love letter",
+          "✈️ A surprise weekend getaway",
+          "📚 Their favorite book or hobby item",
+          "💎 A piece of jewelry"
+        ],
+        category: "preferences"
+      },
+      {
+        question: "What's your partner's biggest dream? ⭐",
+        options: [
+          "🌍 Travel the world together",
+          "🏡 Build a beautiful home",
+          "👶 Start a family",
+          "🏆 Achieve career success"
+        ],
+        category: "dreams"
+      },
+      {
+        question: "How does your partner prefer to show love? 💕",
+        options: [
+          "🤗 Through physical touch and hugs",
+          "🎁 By giving thoughtful gifts",
+          "💬 With words of affirmation",
+          "🛠️ By doing helpful acts of service"
+        ],
+        category: "love language"
+      },
+      {
+        question: "What's your partner's ideal date night? 💖",
+        options: [
+          "👨‍🍳 Cooking dinner together at home",
+          "💃 Dancing under the stars",
+          "🍿 Movie marathon with snacks",
+          "🍜 Trying a new restaurant"
+        ],
+        category: "romance"
+      },
+      {
+        question: "What would your partner do with a free day? 🌈",
+        options: [
+          "😴 Sleep in and relax",
+          "🎨 Try a new hobby or skill",
+          "👨‍👩‍👧‍👦 Spend quality time with loved ones",
+          "🚗 Go on a spontaneous adventure"
+        ],
+        category: "personality"
+      },
+      {
+        question: "What's your partner's favorite way to be comforted? 🤗",
+        options: [
+          "🫂 Warm hugs and cuddles",
+          "🍕 Their favorite comfort food",
+          "👂 Gentle words and listening",
+          "🧘 Alone time to recharge"
+        ],
+        category: "comfort"
+      },
+      {
+        question: "If your partner won the lottery, what would they do first? 💰",
+        options: [
+          "🏖️ Plan an amazing trip together",
+          "🏰 Buy a dream house",
+          "💝 Help family and friends",
+          "💡 Invest in their passion project"
+        ],
+        category: "values"
+      },
+      {
+        question: "What's your partner's favorite season and why? 🌺",
+        options: [
+          "🌸 Spring - new beginnings and flowers",
+          "☀️ Summer - warmth and adventures",
+          "🍂 Fall - cozy vibes and colors",
+          "❄️ Winter - snuggling and holidays"
+        ],
+        category: "preferences"
+      },
+      {
+        question: "How does your partner handle stress? 💭",
+        options: [
+          "🗣️ Talk it out with someone they trust",
+          "🤔 Take time alone to think",
+          "🏃 Stay busy with activities",
+          "📅 Seek comfort in familiar routines"
+        ],
+        category: "personality"
+      }
     ];
-    
-    let idx = 0;
-    let messages = [];
+
+    let currentQuestion = 0;
+    let selectedAnswers = [];
+    let score = 0;
+
+    function startQuiz() {
+      document.getElementById('start-screen').style.display = 'none';
+      document.getElementById('quiz-screen').style.display = 'block';
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const question = quizQuestions[currentQuestion];
+      const progressPercent = ((currentQuestion + 1) / quizQuestions.length) * 100;
+      
+      document.getElementById('progress-bar').style.width = progressPercent + '%';
+      document.getElementById('progress-text').textContent = `Question ${currentQuestion + 1} of ${quizQuestions.length}`;
+      document.getElementById('question-number').textContent = `Question ${currentQuestion + 1}`;
+      document.getElementById('question-text').textContent = question.question;
+      
+      const optionsContainer = document.getElementById('answer-options');
+      optionsContainer.innerHTML = '';
+      
+      question.options.forEach((option, index) => {
+        const optionElement = document.createElement('div');
+        optionElement.className = 'answer-option';
+        optionElement.textContent = option;
+        optionElement.onclick = () => selectAnswer(index, optionElement);
+        optionsContainer.appendChild(optionElement);
+      });
+      
+      // Update navigation buttons
+      document.getElementById('prev-btn').disabled = currentQuestion === 0;
+      document.getElementById('next-btn').disabled = true;
+      document.getElementById('next-btn').textContent = currentQuestion === quizQuestions.length - 1 ? 'Finish 🎉' : 'Next ➡️';
+    }
+
+    function selectAnswer(answerIndex, element) {
+      // Remove previous selections
+      document.querySelectorAll('.answer-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      
+      // Select current option
+      element.classList.add('selected');
+      selectedAnswers[currentQuestion] = answerIndex;
+      
+      // Enable next button
+      document.getElementById('next-btn').disabled = false;
+    }
 
     function nextQuestion() {
-      idx = (idx + 1) % questions.length;
-      showQuestion();
-      updateCounter();
+      if (selectedAnswers[currentQuestion] === undefined) return;
       
-      // Add a little animation effect
-      const quizBox = document.getElementById('quiz-box');
-      quizBox.style.transform = 'scale(0.95)';
-      setTimeout(() => {
-        quizBox.style.transform = 'scale(1)';
-      }, 100);
-    }
-
-    function showQuestion() {
-      document.getElementById('quiz-box').textContent = questions[idx];
-    }
-
-    function updateCounter() {
-      document.getElementById('current-q').textContent = idx + 1;
-      document.getElementById('total-q').textContent = questions.length;
-    }
-
-    function sendMessage() {
-      const chatInput = document.getElementById('chatInput');
-      const nameSelector = document.getElementById('nameSelector');
-      const message = chatInput.value.trim();
-      
-      if (message === '') return;
-      
-      const messageObj = {
-        name: nameSelector.value,
-        text: message,
-        timestamp: new Date()
-      };
-      
-      messages.push(messageObj);
-      displayMessage(messageObj);
-      chatInput.value = '';
-      
-      // Scroll to bottom
-      const chatBox = document.getElementById('chatBox');
-      chatBox.scrollTop = chatBox.scrollHeight;
-    }
-
-    function displayMessage(messageObj) {
-      const chatBox = document.getElementById('chatBox');
-      const messageDiv = document.createElement('div');
-      messageDiv.className = `message ${messageObj.name}`;
-      
-      const nameEmoji = messageObj.name === 'bunny' ? '🐰' : '⚡';
-      const displayName = messageObj.name === 'bunny' ? 'Bunny' : 'Pichu';
-      
-      messageDiv.innerHTML = `
-        <div class="message-name">${nameEmoji} ${displayName}</div>
-        <div class="message-text">${messageObj.text}</div>
-      `;
-      
-      chatBox.appendChild(messageDiv);
-    }
-
-    // Allow Enter key to send message
-    document.getElementById('chatInput').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        sendMessage();
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+      } else {
+        finishQuiz();
       }
-    });
+    }
 
-    // Initialize
-    showQuestion();
-    updateCounter();
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        loadQuestion();
+        
+        // Restore previous selection
+        if (selectedAnswers[currentQuestion] !== undefined) {
+          const options = document.querySelectorAll('.answer-option');
+          options[selectedAnswers[currentQuestion]].classList.add('selected');
+          document.getElementById('next-btn').disabled = false;
+        }
+      }
+    }
+
+    function finishQuiz() {
+      // Calculate score (for demo, we'll use a random-ish calculation)
+      score = Math.floor(60 + Math.random() * 35); // Score between 60-95%
+      
+      document.getElementById('quiz-screen').style.display = 'none';
+      document.getElementById('results-screen').style.display = 'block';
+      
+      showResults();
+    }
+
+    function showResults() {
+      document.getElementById('final-score').textContent = score + '%';
+      
+      let message = '';
+      if (score >= 90) {
+        message = "You two are soulmates! Your connection is absolutely magical! ✨💕";
+      } else if (score >= 80) {
+        message = "Amazing compatibility! You know each other so well! 💖";
+      } else if (score >= 70) {
+        message = "Great job! You have a wonderful understanding of each other! 💗";
+      } else if (score >= 60) {
+        message = "Good connection! There's always more to discover about each other! 💝";
+      } else {
+        message = "Every couple is on a journey of discovery! Keep learning about each other! 💞";
+      }
+      
+      document.getElementById('results-message').textContent = message;
+      
+      // Show breakdown
+      const breakdown = document.getElementById('results-breakdown');
+      breakdown.innerHTML = `
+        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+          <span>💕 Emotional Connection:</span>
+          <span>${Math.floor(score * 0.9 + Math.random() * 10)}%</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+          <span>🎯 Understanding:</span>
+          <span>${Math.floor(score * 1.1 - Math.random() * 10)}%</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+          <span>🌟 Compatibility:</span>
+          <span>${Math.floor(score + Math.random() * 10 - 5)}%</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin: 0.5rem 0;">
+          <span>💫 Future Potential:</span>
+          <span>${Math.floor(score * 1.05)}%</span>
+        </div>
+      `;
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      selectedAnswers = [];
+      score = 0;
+      
+      document.getElementById('results-screen').style.display = 'none';
+      document.getElementById('start-screen').style.display = 'block';
+    }
+
+    // Add some magical sparkle effects
+    function createSparkle() {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'sparkle';
+      sparkle.style.left = Math.random() * 100 + '%';
+      sparkle.style.animationDelay = Math.random() * 3 + 's';
+      document.body.appendChild(sparkle);
+      
+      setTimeout(() => {
+        sparkle.remove();
+      }, 4000);
+    }
+
+    // Create sparkles periodically
+    setInterval(createSparkle, 2000);
   </script>
 </body>
 </html>
