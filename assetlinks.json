@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target" : { 
+    "namespace": "android_app", 
+    "package_name": "bupi", 
+    "sha256_cert_fingerprints": ["16:68:81:AF:D1:A7:B4:BF:E2:98:89:88:07:A7:14:9F:35:7B:80:65:C1:BF:33:14:64:18:3E:73:A7:CD:A1:68"] 
+  }
+}]
