@@ -4,16 +4,7 @@
    <link rel="manifest" href="/manifest.json">
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover, minimal-ui">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#667eea">
-  <meta name="msapplication-navbutton-color" content="#667eea">
-  <meta name="apple-mobile-web-app-title" content="Welcome">
-  <meta name="application-name" content="Welcome">
-  <meta name="msapplication-TileColor" content="#667eea">
-  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -25,16 +16,12 @@
 
     body {
       min-height: 100vh;
-      min-height: 100dvh;
-      min-height: calc(var(--vh, 1vh) * 100);
       overflow: hidden;
       font-family: 'Inter', Arial, sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
       background-size: 400% 400%;
       animation: gradientShift 12s ease infinite;
       position: relative;
-      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-      margin: 0;
     }
 
     @keyframes gradientShift {
@@ -52,7 +39,7 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-main: 1;
+      z-index: 1;
     }
 
     .particle {
@@ -133,12 +120,11 @@
     /* Main container */
     .main-container {
       min-height: 100vh;
-      min-height: calc(var(--vh, 1vh) * 100);
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
-      z-main: 10;
+      z-index: 10;
       padding: 20px;
     }
 
@@ -408,62 +394,6 @@
       }
     }
 
-    /* Fullscreen and mobile optimizations */
-    @media screen and (display-mode: fullscreen) {
-      body {
-        padding: 0;
-      }
-    }
-
-    @media screen and (display-mode: standalone) {
-      body {
-        padding: 0;
-      }
-    }
-    
-    /* Hide browser UI on mobile */
-    @media screen and (max-width: 768px) {
-      body {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        height: calc(var(--vh, 1vh) * 100);
-        overflow: hidden;
-        -webkit-overflow-scrolling: touch;
-      }
-      
-      html {
-        height: 100%;
-        height: calc(var(--vh, 1vh) * 100);
-        overflow: hidden;
-      }
-    }
-    
-    /* iOS Safari specific */
-    @supports (-webkit-touch-callout: none) {
-      body {
-        min-height: -webkit-fill-available;
-      }
-    }
-
-    /* Prevent text selection */
-    * {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    /* Allow text selection for input fields */
-    input, textarea {
-      -webkit-user-select: text;
-      -moz-user-select: text;
-      -ms-user-select: text;
-      user-select: text;
-    }
-
     @keyframes fadeInUp {
       0% {
         opacity: 0;
@@ -632,7 +562,7 @@
       loading.style.display = 'block';
       
       setTimeout(() => {
-        window.location.href = 'place-for-us/main.html';
+        window.location.href = 'main.html';
       }, 1200);
     }
 
@@ -642,106 +572,6 @@
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js').catch(console.error);
     }
-
-    // Fullscreen and mobile browser UI hiding
-    function hideBrowserUI() {
-      // Detect Android
-      const isAndroid = /Android/i.test(navigator.userAgent);
-      const isChrome = /Chrome/i.test(navigator.userAgent);
-      
-      // Request fullscreen if supported
-      if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen().catch(() => {});
-      } else if (document.documentElement.webkitRequestFullscreen) {
-        document.documentElement.webkitRequestFullscreen().catch(() => {});
-      } else if (document.documentElement.msRequestFullscreen) {
-        document.documentElement.msRequestFullscreen().catch(() => {});
-      }
-      
-      // Android Chrome specific optimizations
-      if (isAndroid && isChrome) {
-        // Force viewport height for Android Chrome
-        document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
-        
-        // Handle Android Chrome viewport issues
-        const setVH = () => {
-          const vh = window.innerHeight * 0.01;
-          document.documentElement.style.setProperty('--vh', `${vh}px`);
-        };
-        
-        window.addEventListener('resize', setVH);
-        window.addEventListener('orientationchange', setVH);
-        setVH();
-      }
-      
-      // Hide browser UI on mobile
-      if (navigator.standalone || window.matchMedia('(display-mode: standalone)').matches) {
-        // App is running in standalone mode
-        document.body.style.height = '100vh';
-        document.body.style.height = '100dvh';
-      }
-      
-      // Prevent zoom on double tap
-      let lastTouchEnd = 0;
-      document.addEventListener('touchend', function (event) {
-        const now = (new Date()).getTime();
-        if (now - lastTouchEnd <= 300) {
-          event.preventDefault();
-        }
-        lastTouchEnd = now;
-      }, false);
-      
-      // Prevent pull to refresh
-      document.body.addEventListener('touchmove', function(e) {
-        if (e.target.closest('.password-input') || e.target.closest('.enter-button')) {
-          return;
-        }
-        e.preventDefault();
-      }, { passive: false });
-      
-      // Hide address bar on scroll (iOS Safari and Android Chrome)
-      let scrollTimeout;
-      window.addEventListener('scroll', function() {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(function() {
-          window.scrollTo(0, 1);
-        }, 100);
-      });
-      
-      // Force hide address bar on load
-      setTimeout(function() {
-        window.scrollTo(0, 1);
-      }, 100);
-      
-      // Android specific: Prevent back button from showing browser UI
-      if (isAndroid) {
-        window.addEventListener('popstate', function(e) {
-          e.preventDefault();
-          history.pushState(null, null, window.location.href);
-        });
-        
-        // Push initial state
-        history.pushState(null, null, window.location.href);
-      }
-    }
-
-    // Hide browser UI on page load
-    document.addEventListener('DOMContentLoaded', hideBrowserUI);
-    
-    // Hide browser UI on orientation change
-    window.addEventListener('orientationchange', () => {
-      setTimeout(hideBrowserUI, 100);
-    });
-    
-    // Hide browser UI on window focus
-    window.addEventListener('focus', hideBrowserUI);
-    
-    // Hide browser UI on visibility change
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) {
-        setTimeout(hideBrowserUI, 100);
-      }
-    });
 
     // Add some interactive particles on click
     document.addEventListener('click', (e) => {
@@ -759,7 +589,7 @@
         background: rgba(255,255,255,0.8);
         border-radius: 50%;
         pointer-events: none;
-        z-main: 1000;
+        z-index: 1000;
         left: ${x}px;
         top: ${y}px;
       `;
