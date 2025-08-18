@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Place for Us - Our Digital Love Haven</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Pacifico&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --text-primary: #2d3748;
+      --text-secondary: #4a5568;
+      --accent-pink: #f093fb;
+      --accent-blue: #4facfe;
+      --accent-purple: #764ba2;
+    }
+
+    body {
+      font-family: 'Inter', 'Quicksand', sans-serif;
+      background: var(--primary-gradient);
+      background-size: 400% 400%;
+      animation: gradientFlow 15s ease infinite;
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    @keyframes gradientFlow {
+      0%, 100% { background-position: 0% 50%; }
+      25% { background-position: 100% 50%; }
+      50% { background-position: 100% 100%; }
+      75% { background-position: 0% 100%; }
+    }
+
+    /* Enhanced particle system */
+    .particle-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .floating-particle {
+      position: absolute;
+      font-size: 1.5rem;
+      opacity: 0;
+      animation: particleFloat 20s infinite linear;
+      filter: blur(0.5px);
+    }
+
+    .floating-particle:nth-child(1) { left: 10%; animation-delay: 0s; color: rgba(240, 147, 251, 0.6); }
+    .floating-particle:nth-child(2) { left: 20%; animation-delay: 3s; color: rgba(79, 172, 254, 0.6); }
+    .floating-particle:nth-child(3) { left: 30%; animation-delay: 6s; color: rgba(245, 87, 108, 0.6); }
+    .floating-particle:nth-child(4) { left: 40%; animation-delay: 9s; color: rgba(118, 75, 162, 0.6); }
+    .floating-particle:nth-child(5) { left: 50%; animation-delay: 12s; color: rgba(102, 126, 234, 0.6); }
+    .floating-particle:nth-child(6) { left: 60%; animation-delay: 15s; color: rgba(240, 147, 251, 0.6); }
+    .floating-particle:nth-child(7) { left: 70%; animation-delay: 18s; color: rgba(79, 172, 254, 0.6); }
+    .floating-particle:nth-child(8) { left: 80%; animation-delay: 1s; color: rgba(245, 87, 108, 0.6); }
+
+    @keyframes particleFloat {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Glowing orbs */
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(1px);
+      animation: orbGlow 12s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    .orb-1 {
+      width: 150px;
+      height: 150px;
+      top: 15%;
+      left: 10%;
+      background: radial-gradient(circle, rgba(240, 147, 251, 0.3) 0%, transparent 70%);
+      animation-delay: 0s;
+    }
+
+    .orb-2 {
+      width: 200px;
+      height: 200px;
+      top: 60%;
+      right: 15%;
+      background: radial-gradient(circle, rgba(79, 172, 254, 0.3) 0%, transparent 70%);
+      animation-delay: 4s;
+    }
+
+    .orb-3 {
+      width: 120px;
+      height: 120px;
+      bottom: 20%;
+      left: 30%;
+      background: radial-gradient(circle, rgba(245, 87, 108, 0.3) 0%, transparent 70%);
+      animation-delay: 8s;
+    }
+
+    @keyframes orbGlow {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+      25% { transform: translate(20px, -20px) scale(1.1); opacity: 0.8; }
+      50% { transform: translate(-15px, 15px) scale(0.9); opacity: 0.4; }
+      75% { transform: translate(25px, 5px) scale(1.05); opacity: 0.7; }
+    }
+
+    /* Header */
+    .app-header {
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+      position: relative;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .main-logo {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 8px 32px rgba(240, 147, 251, 0.4));
+      animation: logoFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(5deg); }
+    }
+
+    .app-title {
+      font-family: 'Pacifico', cursive;
+      font-size: 2.5rem;
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #ffffff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+      animation: titleGlow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      0% { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3)); }
+      100% { filter: drop-shadow(0 0 40px rgba(255, 255, 255, 0.6)); }
+    }
+
+    .avatar-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .avatar-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      animation: avatarGlow 2s ease-in-out infinite alternate;
+      background: linear-gradient(45deg, #f093fb, #4facfe);
+    }
+
+    .avatar-img:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes avatarGlow {
+      0% { box-shadow: 0 8px 32px rgba(240, 147, 251, 0.3); }
+      100% { box-shadow: 0 8px 32px rgba(79, 172, 254, 0.3); }
+    }
+
+    .love-connector {
+      font-size: 2rem;
+      animation: heartbeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    .welcome-bubble {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 1rem 2rem;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+      animation: bubbleFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes bubbleFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+    }
+
+    /* Main content */
+    .main-content {
+      position: relative;
+      z-index: 10;
+      padding: 0 1rem;
+    }
+
+    .welcome-card {
+      max-width: 500px;
+      margin: 2rem auto;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 16px 64px rgba(0, 0, 0, 0.1);
+      animation: cardSlideUp 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes cardSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .greeting-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .love-message {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      min-height: 30px;
+    }
+
+    .stats-section {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Enhanced relationship counter styles */
+    .relationship-counter {
+      background: linear-gradient(135deg, rgba(240, 147, 251, 0.2), rgba(79, 172, 254, 0.2));
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .relationship-counter::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      animation: counterShine 3s ease-in-out infinite;
+    }
+
+    @keyframes counterShine {
+      0% { left: -100%; }
+      50% { left: 100%; }
+      100% { left: 100%; }
+    }
+
+    .counter-title {
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .days-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      background: linear-gradient(135deg, #ffffff, #f093fb, #4facfe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+      animation: numberPulse 2s ease-in-out infinite;
+      margin-bottom: 0.5rem;
+    }
+
+    @keyframes numberPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .counter-subtitle {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .relationship-date-input {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+    }
+
+    .date-input-label {
+      color: white;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .date-input {
+      background: rgba(255, 255, 255, 0.15);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      color: white;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+      width: 200px;
+      margin: 0 auto;
+    }
+
+    .date-input:focus {
+      border-color: var(--accent-pink);
+      box-shadow: 0 0 20px rgba(240, 147, 251, 0.3);
+    }
+
+    .date-input::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+      cursor: pointer;
+    }
+
+    .daily-quote {
+      background: rgba(79, 172, 254, 0.2);
+      border-radius: 16px;
+      padding: 1rem;
+      color: white;
+      font-style: italic;
+      border: 1px solid rgba(79, 172, 254, 0.3);
+    }
+
+    /* Games grid */
+    .games-section {
+      max-width: 800px;
+      margin: 3rem auto;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 32px;
+      padding: 2rem;
+      box-shadow: 0 16px 64px rgba(0, 0, 0, 0.1);
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .game-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 1.5rem;
+      text-align: center;
+      text-decoration: none;
+      color: white;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .game-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .game-card:hover::before {
+      left: 100%;
+    }
+
+    .game-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .game-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+      animation: iconFloat 2s ease-in-out infinite;
+    }
+
+    @keyframes iconFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-3px); }
+    }
+
+    .game-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    /* Special styling for the Memory Lane button */
+    .memory-lane-card {
+      background: linear-gradient(135deg, rgba(255, 182, 193, 0.2), rgba(255, 192, 203, 0.15));
+      border: 2px solid rgba(255, 182, 193, 0.3);
+      position: relative;
+    }
+
+    .memory-lane-card::after {
+      content: '✨';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 1.2rem;
+      animation: sparkle 2s ease-in-out infinite;
+    }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .memory-lane-card:hover {
+      background: linear-gradient(135deg, rgba(255, 182, 193, 0.3), rgba(255, 192, 203, 0.25));
+      border-color: rgba(255, 182, 193, 0.5);
+    }
+
+    /* Mini cards */
+    .mini-section {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    /* Special One button styling (now a game card) */
+    .special-one-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(240, 147, 251, 0.2));
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .special-one-card:hover {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(240, 147, 251, 0.3));
+    }
+
+    /* Modal sections */
+    .modal-section {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-section.visible {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+      animation: modalFadeIn 0.3s ease;
+    }
+
+    @keyframes modalFadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .modal-content {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      color: white;
+      position: relative;
+      animation: modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
+    }
+
+    .modal-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    /* Enhanced Love jar specific styles */
+    .jar-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .jar-visual {
+      position: relative;
+      width: 200px;
+      height: 250px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      background: linear-gradient(180deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.1) 20%, 
+        rgba(240, 147, 251, 0.15) 40%, 
+        rgba(79, 172, 254, 0.15) 60%, 
+        rgba(245, 87, 108, 0.15) 80%, 
+        rgba(118, 75, 162, 0.2) 100%);
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px 20px 40px 40px;
+      box-shadow: 
+        0 0 30px rgba(240, 147, 251, 0.3),
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .jar-lid {
+      position: absolute;
+      top: -10px;
+      width: 120px;
+      height: 20px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(200, 200, 200, 0.4));
+      border-radius: 10px;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .jar-notes-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 10px;
+    }
+
+    .jar-note {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 147, 251, 0.8));
+      color: #333;
+      padding: 0.5rem 0.8rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      margin-bottom: 0.5rem;
+      max-width: 90%;
+      word-wrap: break-word;
+      opacity: 0;
+      transform: translateY(20px) scale(0.8);
+      animation: noteDropIn 0.6s ease-out forwards;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes noteDropIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.8);
+      }
+      50% {
+        opacity: 0.8;
+        transform: translateY(-5px) scale(1.05);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .jar-stats {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1rem;
+      margin: 1rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .jar-count {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--accent-pink);
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 10px rgba(240, 147, 251, 0.5);
+    }
+
+    .jar-controls {
+      display: flex;
+      gap: 1rem;
+      margin: 1rem 0;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .jar-input {
+      flex: 1;
+      min-width: 250px;
+      padding: 1rem 1.2rem;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      outline: none;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .jar-input:focus {
+      border-color: var(--accent-pink);
+      box-shadow: 0 0 20px rgba(240, 147, 251, 0.3);
+    }
+
+    .jar-input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .action-btn {
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue));
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      font-size: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .action-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .action-btn:hover::before {
+      left: 100%;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    .action-btn:active {
+      transform: translateY(-1px);
+    }
+
+    .jar-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .secondary-btn {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      padding: 0.8rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .secondary-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .jar-result {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      text-align: center;
+      min-height: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .success-message {
+      color: #4ade80;
+      font-weight: 600;
+    }
+
+    .error-message {
+      color: #f87171;
+      font-weight: 600;
+    }
+
+    /* Notes section */
+    .notes-input {
+      width: 100%;
+      min-height: 120px;
+      padding: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      outline: none;
+      resize: vertical;
+      font-family: inherit;
+      margin-bottom: 1rem;
+    }
+
+    .notes-input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .notes-list {
+      list-style: none;
+      padding: 0;
+      margin-top: 1.5rem;
+    }
+
+    .note-item {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .note-date {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Goals section */
+    .goals-form {
+      display: flex;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+      align-items: center;
+    }
+
+    .goal-input {
+      flex: 1;
+      padding: 0.8rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      outline: none;
+    }
+
+    .goals-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .goal-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      margin-bottom: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .goal-checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      border-radius: 4px;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .goal-checkbox.completed {
+      background: var(--accent-pink);
+      border-color: var(--accent-pink);
+    }
+
+    .goal-text {
+      flex: 1;
+    }
+
+    .goal-text.completed {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+
+    /* Footer */
+    .app-footer {
+      text-align: center;
+      padding: 2rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 500;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .app-title {
+        font-size: 2rem;
+      }
+
+      .games-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 1rem;
+      }
+
+      .game-card {
+        padding: 1rem;
+      }
+
+      .modal-content {
+        padding: 1.5rem;
+        margin: 1rem;
+      }
+
+      .jar-controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .jar-input {
+        min-width: auto;
+      }
+
+      .goals-form {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .jar-visual {
+        width: 160px;
+        height: 200px;
+      }
+
+      .days-number {
+        font-size: 2rem;
+      }
+
+      .date-input {
+        width: 180px;
+      }
+    }
+
+    /* Floating heart animation */
+    .floating-heart {
+      position: fixed;
+      font-size: 2rem;
+      pointer-events: none;
+      z-index: 10000;
+      animation: heartFly 2s ease-out forwards;
+    }
+
+    @keyframes heartFly {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-100px) scale(1.5);
+      }
+    }
+
+    /* Loading animation */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="particle-container">
+    <div class="floating-particle">💖</div>
+    <div class="floating-particle">💙</div>
+    <div class="floating-particle">💜</div>
+    <div class="floating-particle">✨</div>
+    <div class="floating-particle">💛</div>
+    <div class="floating-particle">💚</div>
+    <div class="floating-particle">🌟</div>
+    <div class="floating-particle">💕</div>
+  </div>
+
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <header class="app-header">
+    <div class="main-logo">💖</div>
+    <h1 class="app-title">🌸 Place for Us 🌸</h1>
+    <div class="avatar-section">
+      <img src="assets/bunny.png" alt="Bunny" class="avatar-img">
+      <span class="love-connector">💙✨</span>
+      <img src="assets/pichu.png" alt="Pichu" class="avatar-img">
+    </div>
+    <div class="welcome-bubble">
+      👋 Hi, Bunny & Pichu! Welcome to your magical world!
+    </div>
+  </header>
+  
+  <main class="main-content">
+    <section class="welcome-card">
+      <h2 class="greeting-title" id="greeting">Good Day, Lovebirds! 💕</h2>
+      <div class="love-message" id="love-msg">Your love story continues to bloom every day! 🌸</div>
+      
+      <div class="relationship-counter">
+        <div class="counter-title">
+          💕 Our Love Journey 💕
+        </div>
+        <div class="days-number" id="dayCounter">∞</div>
+        <div class="counter-subtitle">Days of being amazing together!</div>
+      </div>
+      
+      <div class="relationship-date-input" id="dateInputSection">
+        <label class="date-input-label">🗓️ When did your love story begin?</label>
+        <input type="date" id="relationshipDate" class="date-input" onchange="setRelationshipDate()">
+      </div>
+      
+      <div class="daily-quote" id="today-quote">"Love is not just looking at each other, it's looking in the same direction together." ✨</div>
+    </section>
+
+    <section class="games-section">
+      <div class="games-grid">
+        <a href="games/truth.html/truthordare.html" class="game-card">
+          <span class="game-icon">🧃</span>
+          <span class="game-title">Truth & Dare</span>
+        </a>
+        <a href="games/xox/xox.html" class="game-card">
+          <span class="game-icon">❌⭕️</span>
+          <span class="game-title">Tic-Tac-Toe</span>
+        </a>
+        <a href="games/wouldyourather/ourather.html" class="game-card">
+          <span class="game-icon">💕</span>
+          <span class="game-title">Would You Rather</span>
+        </a>
+        <a href="games/quiz/quiz.html" class="game-card">
+          <span class="game-icon">✏️</span>
+          <span class="game-title">Couple Quiz</span>
+        </a>
+        <div class="game-card" onclick="showModal('lovejar')">
+          <span class="game-icon">🍯</span>
+          <span class="game-title">Love Jar</span>
+        </div>
+        <div class="game-card" onclick="showModal('notes')">
+          <span class="game-icon">💌</span>
+          <span class="game-title">Love Notes</span>
+        </div>
+        <a href="memory.html" class="game-card memory-lane-card">
+          <span class="game-icon">📸</span>
+          <span class="game-title">Memory Lane</span>
+        </a>
+        <a href="first.html" class="game-card special-one-card">
+          <span class="game-icon">✨</span>
+          <span class="game-title">Special One</span>
+        </a>
+      </div>
+
+      <div class="mini-section">
+        <div class="mini-card" onclick="showModal('playlist')">🎶 Our Playlist</div>
+        <div class="mini-card" onclick="showModal('goals')">🎯 Couple Goals</div>
+      </div>
+    </section>
+  </main>
+
+  <div id="lovejar" class="modal-section">
+    <div class="modal-content">
+      <button class="close-btn" onclick="hideModal('lovejar')">×</button>
+      <h2 class="modal-title">🍯 The Love Jar</h2>
+      
+      <div class="jar-container">
+        <div class="jar-visual">
+          <div class="jar-lid"></div>
+          <div class="jar-notes-container" id="jarNotesContainer">
+            </div>
+        </div>
+        
+        <div class="jar-stats">
+          <div class="jar-count" id="jarCount">0</div>
+          <div>Love Notes Collected</div>
+        </div>
+        
+        <div class="jar-controls">
+          <input id="jarInput" class="jar-input" placeholder="Write your love note..." maxlength="100" />
+          <button id="jarBtn" class="action-btn" onclick="addLoveNote()">Add Note 💖</button>
+        </div>
+        
+        <div class="jar-actions">
+          <button class="secondary-btn" onclick="getRandomNote()">Random Note 🎲</button>
+          <button class="secondary-btn" onclick="clearAllNotes()">Clear Jar 🗑️</button>
+        </div>
+        
+        <div id="jarResult" class="jar-result"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="playlist" class="modal-section">
+    <div class="modal-content">
+      <button class="close-btn" onclick="hideModal('playlist')">×</button>
+      <h2 class="modal-title">🎶 Our Playlist</h2>
+      <div class="playlist-container">
+        <div class="local-music-controls" style="margin-bottom: 20px; text-align: center;">
+          <h3 style="color: white; margin-bottom: 15px;">🎵 Local Music Player</h3>
+          <div id="localMusicPlayer" style="display: none;">
+            <audio id="localAudioPlayer" controls style="width: 100%; margin-bottom: 10px;">
+              Your browser does not support the audio element.
+            </audio>
+            <div id="currentTrackInfo" style="color: white; margin-top: 10px; font-size: 0.9rem;"></div>
+          </div>
+          <div id="noLocalMusicMessage" style="color: #f87171; font-weight: 500; display: none;">
+            No local music files found. Add some songs to the assets/music folder!
+          </div>
+          <button id="refreshMusicBtn" class="secondary-btn" onclick="refreshLocalMusic()" style="margin-top: 10px;">
+            Refresh Music List
+          </button>
+        </div>
+        
+        <div style="margin: 20px 0; text-align: center; color: rgba(255,255,255,0.7);">OR</div>
+        
+        <h3 style="color: white; text-align: center; margin-bottom: 15px;">🎧 Spotify Playlist</h3>
+        <iframe style="border-radius:12px" src="https://open.spotify.com/playlist/37i9dQZF1DWZNJXX2UeBij?si=h1WRviLdRfWxdLSMdYr2dw" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <div id="playlistResult" class="jar-result">Enjoy our love songs playlist above! 🎵</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="notes" class="modal-section">
+    <div class="modal-content">
+      <button class="close-btn" onclick="hideModal('notes')">×</button>
+      <h2 class="modal-title">💌 Love Notes</h2>
+      <div class="notes-container">
+        <textarea id="notesInput" class="notes-input" placeholder="Write your love notes here..."></textarea>
+        <button id="notesBtn" class="action-btn" onclick="addNote()">Add Note</button>
+        <ul id="notesList" class="notes-list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="goals" class="modal-section">
+    <div class="modal-content">
+      <button class="close-btn" onclick="hideModal('goals')">×</button>
+      <h2 class="modal-title">🎯 Couple Goals</h2>
+      <div class="goals-container">
+        <form id="goalsForm" class="goals-form" onsubmit="addGoal(event)">
+          <input type="text" id="goalInput" class="goal-input" placeholder="Add a new goal..." />
+          <button type="submit" class="action-btn">Add Goal</button>
+        </form>
+        <ul id="goalsList" class="goals-list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Love Jar functionality
+    let loveNotes = JSON.parse(window.localStorage?.getItem('loveNotes') || '[]');
+    let notes = JSON.parse(window.localStorage?.getItem('notes') || '[]');
+    let goals = JSON.parse(window.localStorage?.getItem('goals') || '[]');
+
+    // Relationship counter functionality
+    let relationshipStartDate = window.localStorage?.getItem('relationshipStartDate');
+
+    // Initialize the app
+    document.addEventListener('DOMContentLoaded', function() {
+      updateJarVisual();
+      loadNotes();
+      loadGoals();
+      updateGreeting();
+      initializeRelationshipCounter();
+      
+      // Update counter every day at midnight
+      setInterval(updateDayCounter, 1000 * 60 * 60); // Check every hour
+    });
+
+    // Relationship Counter Functions
+    function initializeRelationshipCounter() {
+      if (relationshipStartDate) {
+        document.getElementById('relationshipDate').value = relationshipStartDate;
+        updateDayCounter();
+        hideInitialDateInput();
+      } else {
+        showInitialDateInput();
+      }
+    }
+
+    function setRelationshipDate() {
+      const dateInput = document.getElementById('relationshipDate');
+      const selectedDate = dateInput.value;
+      
+      if (selectedDate) {
+        relationshipStartDate = selectedDate;
+        if (window.localStorage) {
+          window.localStorage.setItem('relationshipStartDate', selectedDate);
+        }
+        updateDayCounter();
+        hideInitialDateInput();
+        createFloatingHeart();
+        
+        // Show success message
+        setTimeout(() => {
+          alert('🎉 Your love story date has been saved! 💕');
+        }, 500);
+      }
+    }
+
+    function updateDayCounter() {
+      const counterElement = document.getElementById('dayCounter');
+      
+      if (!relationshipStartDate) {
+        counterElement.textContent = '∞';
+        return;
+      }
+      
+      const startDate = new Date(relationshipStartDate);
+      const currentDate = new Date();
+      
+      // Calculate the difference in time
+      const timeDifference = currentDate.getTime() - startDate.getTime();
+      
+      // Calculate the difference in days
+      const daysDifference = Math.floor(timeDifference / (1000 * 3600 * 24));
+      
+      // Handle edge cases
+      if (daysDifference < 0) {
+        counterElement.textContent = '💫';
+        return;
+      }
+      
+      // Add some special messages for milestones
+      const milestoneMessage = getMilestoneMessage(daysDifference);
+      if (milestoneMessage) {
+        setTimeout(() => {
+          alert(milestoneMessage);
+        }, 1000);
+      }
+      
+      // Animate the number change
+      animateCounter(counterElement, daysDifference);
+    }
+
+    function animateCounter(element, targetNumber) {
+      const currentNumber = parseInt(element.textContent) || 0;
+      const increment = targetNumber > currentNumber ? 1 : -1;
+      const stepTime = Math.abs(Math.floor(500 / (targetNumber - currentNumber))) || 50;
+      
+      if (currentNumber === targetNumber) {
+        element.textContent = targetNumber;
+        return;
+      }
+      
+      let current = currentNumber;
+      const timer = setInterval(() => {
+        current += increment;
+        element.textContent = current;
+        
+        if (current === targetNumber) {
+          clearInterval(timer);
+        }
+      }, stepTime);
+    }
+
+    function getMilestoneMessage(days) {
+      const milestones = {
+        1: "🎉 One day together! The beginning of something beautiful! 💕",
+        7: "🌟 One week of love! Every day gets better! 💖",
+        30: "🎊 One month together! Time flies when you're in love! 💝",
+        100: "💯 100 days of love! You're absolutely amazing together! 🎉",
+        365: "🎂 One year of pure love! Happy anniversary! 💕✨",
+        500: "🌟 500 days! Your love story is truly magical! 💖",
+        1000: "🎊 1000 days! A milestone of eternal love! 💝🎉"
+      };
+      
+      return milestones[days] || null;
+    }
+
+    function showInitialDateInput() {
+      document.getElementById('dateInputSection').style.display = 'block';
+    }
+
+    function hideInitialDateInput() {
+      document.getElementById('dateInputSection').style.display = 'none';
+    }
+
+    // Reset relationship date function (can be called from browser console)
+    function resetRelationshipDate() {
+      if (confirm('Are you sure you want to reset your relationship start date?')) {
+        if (window.localStorage) {
+          window.localStorage.removeItem('relationshipStartDate');
+        }
+        relationshipStartDate = null;
+        document.getElementById('relationshipDate').value = '';
+        document.getElementById('dayCounter').textContent = '∞';
+        showInitialDateInput();
+      }
+    }
+
+    // Modal functions
+    function showModal(modalId) {
+      const modal = document.getElementById(modalId);
+      modal.classList.add('visible');
+      modal.style.display = 'flex';
+      
+      // Add click outside to close
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          hideModal(modalId);
+        }
+      });
+    }
+
+    function hideModal(modalId) {
+      const modal = document.getElementById(modalId);
+      modal.classList.remove('visible');
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 300);
+    }
+
+    // Enhanced Love Jar Functions
+    function addLoveNote() {
+      const input = document.getElementById('jarInput');
+      const result = document.getElementById('jarResult');
+      const note = input.value.trim();
+      
+      if (!note) {
+        result.innerHTML = '<span class="error-message">Please write a love note first! 💕</span>';
+        return;
+      }
+      
+      if (note.length > 100) {
+        result.innerHTML = '<span class="error-message">Keep it under 100 characters! ✨</span>';
+        return;
+      }
+      
+      // Add note with timestamp
+      const newNote = {
+        text: note,
+        date: new Date().toLocaleDateString(),
+        id: Date.now()
+      };
+      
+      loveNotes.push(newNote);
+      if (window.localStorage) {
+        window.localStorage.setItem('loveNotes', JSON.stringify(loveNotes));
+      }
+      
+      // Clear input
+      input.value = '';
+      
+      // Update visual
+      updateJarVisual();
+      
+      // Show success message
+      result.innerHTML = '<span class="success-message">Love note added to the jar! 💖</span>';
+      
+      // Create floating heart effect
+      createFloatingHeart();
+      
+      // Clear message after 3 seconds
+      setTimeout(() => {
+        result.innerHTML = '';
+      }, 3000);
+    }
+
+    function updateJarVisual() {
+      const container = document.getElementById('jarNotesContainer');
+      const countElement = document.getElementById('jarCount');
+      
+      // Update count
+      countElement.textContent = loveNotes.length;
+      
+      // Clear existing notes
+      container.innerHTML = '';
+      
+      // Show last 5 notes in jar visual
+      const recentNotes = loveNotes.slice(-5);
+      recentNotes.forEach((note, index) => {
+        const noteElement = document.createElement('div');
+        noteElement.className = 'jar-note';
+        noteElement.textContent = note.text;
+        noteElement.style.animationDelay = `${index * 0.1}s`;
+        
+        // Random positioning for a more natural look
+        const randomLeft = Math.random() * 20 - 10; // -10% to 10%
+        noteElement.style.transform = `translateX(${randomLeft}px)`;
+        
+        container.appendChild(noteElement);
+      });
+    }
+
+    function getRandomNote() {
+      const result = document.getElementById('jarResult');
+      
+      if (loveNotes.length === 0) {
+        result.innerHTML = '<span class="error-message">The jar is empty! Add some love notes first 💕</span>';
+        return;
+      }
+      
+      const randomNote = loveNotes[Math.floor(Math.random() * loveNotes.length)];
+      result.innerHTML = `
+        <div style="background: rgba(255, 255, 255, 0.2); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.3);">
+          <div style="font-size: 1.1rem; margin-bottom: 0.5rem;">"${randomNote.text}"</div>
+          <div style="font-size: 0.9rem; opacity: 0.8;">Added on ${randomNote.date} 💖</div>
+        </div>
+      `;
+      
+      createFloatingHeart();
+    }
+
+    function clearAllNotes() {
+      if (loveNotes.length === 0) {
+        document.getElementById('jarResult').innerHTML = '<span class="error-message">The jar is already empty! 🍯</span>';
+        return;
+      }
+      
+      if (confirm('Are you sure you want to clear all love notes? This cannot be undone! 💔')) {
+        loveNotes = [];
+        if (window.localStorage) {
+          window.localStorage.removeItem('loveNotes');
+        }
+        updateJarVisual();
+        document.getElementById('jarResult').innerHTML = '<span class="success-message">Love jar cleared! Ready for new memories 💖</span>';
+      }
+    }
+
+    function createFloatingHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.innerHTML = '💖';
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      heart.style.top = window.innerHeight - 100 + 'px';
+      document.body.appendChild(heart);
+      
+      setTimeout(() => {
+        heart.remove();
+      }, 2000);
+    }
+
+    // Allow Enter key to add note
+    document.getElementById('jarInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        addLoveNote();
+      }
+    });
+
+    // Notes functionality
+    function addNote() {
+      const input = document.getElementById('notesInput');
+      const noteText = input.value.trim();
+      
+      if (!noteText) return;
+      
+      const newNote = {
+        text: noteText,
+        date: new Date().toLocaleDateString(),
+        id: Date.now()
+      };
+      
+      notes.push(newNote);
+      if (window.localStorage) {
+        window.localStorage.setItem('notes', JSON.stringify(notes));
+      }
+      input.value = '';
+      loadNotes();
+    }
+
+    function loadNotes() {
+      const notesList = document.getElementById('notesList');
+      notesList.innerHTML = '';
+      
+      notes.slice().reverse().forEach(note => {
+        const li = document.createElement('li');
+        li.className = 'note-item';
+        li.innerHTML = `
+          <div class="note-date">${note.date}</div>
+          <div>${note.text}</div>
+        `;
+        notesList.appendChild(li);
+      });
+    }
+
+    // Goals functionality
+    function addGoal(event) {
+      event.preventDefault();
+      const input = document.getElementById('goalInput');
+      const goalText = input.value.trim();
+      
+      if (!goalText) return;
+      
+      const newGoal = {
+        text: goalText,
+        completed: false,
+        id: Date.now()
+      };
+      
+      goals.push(newGoal);
+      if (window.localStorage) {
+        window.localStorage.setItem('goals', JSON.stringify(goals));
+      }
+      input.value = '';
+      loadGoals();
+    }
+
+    function loadGoals() {
+      const goalsList = document.getElementById('goalsList');
+      goalsList.innerHTML = '';
+      
+      goals.forEach(goal => {
+        const li = document.createElement('li');
+        li.className = 'goal-item';
+        li.innerHTML = `
+          <div class="goal-checkbox ${goal.completed ? 'completed' : ''}" onclick="toggleGoal(${goal.id})">
+            ${goal.completed ? '✓' : ''}
+          </div>
+          <div class="goal-text ${goal.completed ? 'completed' : ''}">${goal.text}</div>
+        `;
+        goalsList.appendChild(li);
+      });
+    }
+
+    function toggleGoal(goalId) {
+      goals = goals.map(goal => 
+        goal.id === goalId ? {...goal, completed: !goal.completed} : goal
+      );
+      if (window.localStorage) {
+        window.localStorage.setItem('goals', JSON.stringify(goals));
+      }
+      loadGoals();
+    }
+
+    // Update greeting based on time
+    function updateGreeting() {
+      const hour = new Date().getHours();
+      const greetingElement = document.getElementById('greeting');
+      
+      let greeting;
+      if (hour < 12) {
+        greeting = "Good Morning, Lovebirds! 🌅";
+      } else if (hour < 18) {
+        greeting = "Good Afternoon, Sweethearts! ☀️";
+      } else {
+        greeting = "Good Evening, My Loves! 🌙";
+      }
+      
+      greetingElement.textContent = greeting;
+    }
+
+    // Close modals with Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const visibleModal = document.querySelector('.modal-section.visible');
+        if (visibleModal) {
+          hideModal(visibleModal.id);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
