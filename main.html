@@ -502,14 +502,24 @@
       flex-wrap: wrap;
     }
 
-    /* Special One button styling (now a game card) */
-    .special-one-card {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(240, 147, 251, 0.2));
-      border: 1px solid rgba(255, 255, 255, 0.3);
+    .mini-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 0.8rem 1.5rem;
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
     }
-    
-    .special-one-card:hover {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(240, 147, 251, 0.3));
+
+    .mini-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
     }
 
     /* Modal sections */
@@ -1004,6 +1014,7 @@
   </style>
 </head>
 <body>
+  <!-- Particle system -->
   <div class="particle-container">
     <div class="floating-particle">💖</div>
     <div class="floating-particle">💙</div>
@@ -1015,10 +1026,12 @@
     <div class="floating-particle">💕</div>
   </div>
 
+  <!-- Glowing orbs -->
   <div class="glow-orb orb-1"></div>
   <div class="glow-orb orb-2"></div>
   <div class="glow-orb orb-3"></div>
 
+  <!-- Header -->
   <header class="app-header">
     <div class="main-logo">💖</div>
     <h1 class="app-title">🌸 Place for Us 🌸</h1>
@@ -1032,11 +1045,14 @@
     </div>
   </header>
   
+  <!-- Main content -->
   <main class="main-content">
+    <!-- Welcome card -->
     <section class="welcome-card">
       <h2 class="greeting-title" id="greeting">Good Day, Lovebirds! 💕</h2>
       <div class="love-message" id="love-msg">Your love story continues to bloom every day! 🌸</div>
       
+      <!-- Enhanced Relationship Counter -->
       <div class="relationship-counter">
         <div class="counter-title">
           💕 Our Love Journey 💕
@@ -1045,6 +1061,7 @@
         <div class="counter-subtitle">Days of being amazing together!</div>
       </div>
       
+      <!-- Date Input Section -->
       <div class="relationship-date-input" id="dateInputSection">
         <label class="date-input-label">🗓️ When did your love story begin?</label>
         <input type="date" id="relationshipDate" class="date-input" onchange="setRelationshipDate()">
@@ -1053,6 +1070,7 @@
       <div class="daily-quote" id="today-quote">"Love is not just looking at each other, it's looking in the same direction together." ✨</div>
     </section>
 
+    <!-- Games section -->
     <section class="games-section">
       <div class="games-grid">
         <a href="games/truth.html/truthordare.html" class="game-card">
@@ -1079,13 +1097,14 @@
           <span class="game-icon">💌</span>
           <span class="game-title">Love Notes</span>
         </div>
+        <!-- NEW: Memory Lane Photo Collage Button -->
         <a href="memory.html" class="game-card memory-lane-card">
           <span class="game-icon">📸</span>
           <span class="game-title">Memory Lane</span>
         </a>
-        <a href="first.html" class="game-card special-one-card">
-          <span class="game-icon">✨</span>
-          <span class="game-title">Special One</span>
+        <a href="../calendar.html" class="game-card">
+          <span class="game-icon">📅</span>
+          <span class="game-title">Calendar</span>
         </a>
       </div>
 
@@ -1096,45 +1115,49 @@
     </section>
   </main>
 
+  <!-- Enhanced Love Jar Modal -->
   <div id="lovejar" class="modal-section">
     <div class="modal-content">
-      <button class="close-btn" onclick="hideModal('lovejar')">×</button>
+      <button class="close-btn" onclick="hideModal('lovejar')">&times;</button>
       <h2 class="modal-title">🍯 The Love Jar</h2>
-      <a href="../calendar.html" class="game-card">
-          <span class="game-icon">📅</span>
-          <span class="game-title">Calendar</span>
-        </a>
-      </div>
+      
       <div class="jar-container">
+        <!-- Visual Jar -->
         <div class="jar-visual">
           <div class="jar-lid"></div>
           <div class="jar-notes-container" id="jarNotesContainer">
-            </div>
+            <!-- Notes will appear here -->
+          </div>
         </div>
         
+        <!-- Jar Statistics -->
         <div class="jar-stats">
           <div class="jar-count" id="jarCount">0</div>
           <div>Love Notes Collected</div>
         </div>
         
+        <!-- Input Controls -->
         <div class="jar-controls">
           <input id="jarInput" class="jar-input" placeholder="Write your love note..." maxlength="100" />
           <button id="jarBtn" class="action-btn" onclick="addLoveNote()">Add Note 💖</button>
         </div>
         
+        <!-- Action Buttons -->
         <div class="jar-actions">
           <button class="secondary-btn" onclick="getRandomNote()">Random Note 🎲</button>
           <button class="secondary-btn" onclick="clearAllNotes()">Clear Jar 🗑️</button>
         </div>
         
+        <!-- Result Display -->
         <div id="jarResult" class="jar-result"></div>
       </div>
     </div>
   </div>
 
+  <!-- Playlist Modal -->
   <div id="playlist" class="modal-section">
     <div class="modal-content">
-      <button class="close-btn" onclick="hideModal('playlist')">×</button>
+      <button class="close-btn" onclick="hideModal('playlist')">&times;</button>
       <h2 class="modal-title">🎶 Our Playlist</h2>
       <div class="playlist-container">
         <div class="local-music-controls" style="margin-bottom: 20px; text-align: center;">
@@ -1162,9 +1185,10 @@
     </div>
   </div>
 
+  <!-- Notes Modal -->
   <div id="notes" class="modal-section">
     <div class="modal-content">
-      <button class="close-btn" onclick="hideModal('notes')">×</button>
+      <button class="close-btn" onclick="hideModal('notes')">&times;</button>
       <h2 class="modal-title">💌 Love Notes</h2>
       <div class="notes-container">
         <textarea id="notesInput" class="notes-input" placeholder="Write your love notes here..."></textarea>
@@ -1174,9 +1198,10 @@
     </div>
   </div>
 
+  <!-- Goals Modal -->
   <div id="goals" class="modal-section">
     <div class="modal-content">
-      <button class="close-btn" onclick="hideModal('goals')">×</button>
+      <button class="close-btn" onclick="hideModal('goals')">&times;</button>
       <h2 class="modal-title">🎯 Couple Goals</h2>
       <div class="goals-container">
         <form id="goalsForm" class="goals-form" onsubmit="addGoal(event)">
@@ -1594,4 +1619,5 @@
   </script>
 </body>
 </html>
+
 
