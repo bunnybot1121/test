@@ -204,4 +204,23 @@ footer {
   z-index: -1;
   box-shadow: 0 2.5px 18px #fbeaff3b;
   pointer-events: none;
+
 }
+<style>
+/* Remove black borders from all elements */
+* {
+    border: none !important;
+    outline: none !important;
+}
+
+/* Specifically target input fields */
+input, textarea, select {
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+/* Remove any horizontal rules (hr lines) */
+hr {
+    display: none !important;
+}
+</style>
