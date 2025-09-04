@@ -3,8 +3,8 @@
   "short_name": "Place",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#fbeaff",
-  "theme_color": "#fbeaff",
+  "background_color": "#667eea",
+  "theme_color": "#667eea",
   "icons": [
     {
       "src": "/icon-192.png",
