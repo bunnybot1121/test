@@ -87,26 +87,3 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
   }
 });
-
-// Show modal by adding 'visible' class
-function showModal(id) {
-  const modal = document.getElementById(id);
-  if (modal) {
-    modal.classList.add('visible');
-  }
-}
-
-// Hide modal by removing 'visible' class
-function hideModal(id) {
-  const modal = document.getElementById(id);
-  if (modal) {
-    modal.classList.remove('visible');
-  }
-}
-
-function renderPlaylistSongs() {
-  const container = document.getElementById('playlistResult');
-  if (!container) return;
-  container.innerHTML = '';
-}
-
