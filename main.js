@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Calculate and display relationship days counter without shayari
   const anniversaryEl = document.getElementById('anniversary');
   if (anniversaryEl) {
-    const relationshipStart = new Date('2024-11-29');
+    const relationshipStart = new Date('2024-11-30');
     const today = new Date();
     const diffTime = Math.abs(today - relationshipStart);
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
@@ -109,3 +109,4 @@ function renderPlaylistSongs() {
   if (!container) return;
   container.innerHTML = '';
 }
+
