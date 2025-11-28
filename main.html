@@ -1235,16 +1235,17 @@
       // Update counter every day at midnight
       setInterval(updateDayCounter, 1000 * 60 * 60); // Check every hour
     });
-
-    // Update old date to new date if necessary
-      if (!relationshipStartDate || relationshipStartDate === '2024-11-29') {
+// Relationship Counter Functions
+    function initializeRelationshipCounter() {
+      if (!relationshipStartDate) {
+        // Set default date if not set
         relationshipStartDate = '2024-11-30';
         window.localStorage.setItem('relationshipStartDate', '2024-11-30');
       }
+      // Always display the date and hide input
       document.getElementById('relationshipDate').value = relationshipStartDate;
       updateDayCounter();
       hideInitialDateInput();
-      }
     }
 
     function setRelationshipDate() {
@@ -1621,6 +1622,7 @@
   </script>
 </body>
 </html>
+
 
 
 
